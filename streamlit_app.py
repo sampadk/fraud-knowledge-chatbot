@@ -10,7 +10,7 @@ from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
 
 # App title and description
-st.title("AI Fraud Typology Assistant 🤖")
+st.title("AI Fraud Detection Assistant 🤖")
 st.write("This chatbot is powered by Google's Gemini model and a curated knowledge base. Ask a question to get started!")
 
 # Your full Synonym Map
@@ -86,8 +86,12 @@ def initialize_rag_chain():
     - UBO: Ultimate Beneficial Owner; real person controlling an entity.
     """
 
+    # Create the RAG Chain with the Final, Supercharged Prompt
     template = f"""
-    You are an expert fraud detection assistant... (Your full V6 prompt)
+    You are an expert fraud detection assistant. Your ONLY task is to answer the user's question based STRICTLY on the context provided below.
+    First, use the DOMAIN GLOSSARY to understand key terms. Then, carefully analyze the CONTEXT to find the answer.
+    Synthesize the information from the context into a clear, concise, and professional answer.
+    Do not use any of your prior knowledge. If the context does not contain the answer, you MUST say: "Based on the provided documents, I do not have enough information to answer that question."
 
     DOMAIN GLOSSARY:
     {domain_glossary}
