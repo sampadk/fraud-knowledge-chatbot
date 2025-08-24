@@ -1,19 +1,16 @@
-# streamlit_app.py (V7 - The Final Deployment Version with ChromaDB Hot-Patch)
+# streamlit_app.py (V8 - The Final Cloud-Native Version)
 
 import streamlit as st
 
-# --- NEW: Hot-patch for ChromaDB on Streamlit Cloud ---
-# This is a special fix for a known issue where the Streamlit cloud environment
-# has an incompatible version of SQLite. This code tells ChromaDB to use the
-# pysqlite3-binary package we just added to requirements.txt.
+# --- Hot-patch for ChromaDB on Streamlit Cloud ---
 __import__('pysqlite3')
 import sys
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 # --- End of Hot-patch ---
 
 import re
-from langchain_ollama import OllamaLLM
-from langchain_ollama.embeddings import OllamaEmbeddings
+# --- NEW: Import Google's libraries ---
+from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 from langchain_community.document_loaders import DirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
@@ -79,9 +76,16 @@ def initialize_rag_chain():
     documents = loader.load()
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=350, chunk_overlap=50)
     texts = text_splitter.split_documents(documents)
-    embeddings = OllamaEmbeddings(model="mxbai-embed-large")
+
+    # --- NEW: Use Google's Embedding Model ---
+    # It's powerful and designed to work with their LLMs.
+    embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key=st.secrets["GEMINI_API_KEY"])
+    
     vectorstore = Chroma.from_documents(documents=texts, embedding=embeddings)
-    llm = OllamaLLM(model="gemma3n:e4b")
+
+    # --- NEW: Initialize the Gemini LLM ---
+    # It will automatically use the API key from Streamlit's secrets.
+    llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=st.secrets["GEMINI_API_KEY"], temperature=0.3)
 
     # Your new, more detailed domain glossary
     domain_glossary = """
@@ -123,9 +127,9 @@ def initialize_rag_chain():
     """
 
     QA_CHAIN_PROMPT = PromptTemplate.from_template(template)
-    
-    retriever = vectorstore.as_retriever(search_type="mmr", search_kwargs={"k": 10})
 
+    retriever = vectorstore.as_retriever(search_type="mmr", search_kwargs={"k": 10})
+    
     qa_chain = RetrievalQA.from_chain_type(
         llm, retriever=retriever, chain_type_kwargs={"prompt": QA_CHAIN_PROMPT}
     )

@@ -1,7 +1,7 @@
 streamlit
 langchain
 langchain-community
-langchain-ollama
+langchain-google-genai
 langchain-chroma
 unstructured
 python-magic
