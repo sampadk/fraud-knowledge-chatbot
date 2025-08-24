@@ -4,5 +4,5 @@ langchain-community
 langchain-ollama
 langchain-chroma
 unstructured
-python-magic-bin
+python-magic
 sentence-transformers
