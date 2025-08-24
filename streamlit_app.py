@@ -1,4 +1,4 @@
-# streamlit_app.py (V9 - The Final, Cleaned Version)
+# streamlit_app.py (V10 - Final Stable Version)
 
 import streamlit as st
 import re
@@ -11,13 +11,9 @@ from langchain.chains import RetrievalQA
 
 # App title and description
 st.title("AI Fraud Typology Assistant 🤖")
-st.write("This chatbot is powered by a curated knowledge base on fraud typologies and patterns. Ask a question to get started!")
+st.write("This chatbot is powered by Google's Gemini model and a curated knowledge base. Ask a question to get started!")
 
-# ==============================================================================
-# NEW SECTION: Synonym Map and Expansion Logic
-# ==============================================================================
-
-# Your comprehensive synonym map
+# Your full Synonym Map
 SYNONYM_MAP = {
     "Authorized Push Payment (APP) Scam": ["safe account scam", "bank transfer scam", "authorized payment scam", "APP", "push payment scam"],
     "Account Takeover (ATO)": ["hijacked account", "compromised account", "login takeover", "session takeover"],
@@ -40,46 +36,37 @@ SYNONYM_MAP = {
 }
 
 def expand_query_with_synonyms(query, synonym_map):
-    """
-    Expands a user's query with synonyms for better retrieval.
-    """
     expanded_query = query
-    # Use word boundaries to match whole words/phrases
     for formal_term, aliases in synonym_map.items():
         all_terms = [formal_term] + aliases
         for term in all_terms:
-            # Check if the term is in the query (case-insensitive)
             if re.search(r'\b' + re.escape(term) + r'\b', query, re.IGNORECASE):
-                # If a match is found, add the formal term and a key alias for context
-                # and then break to avoid adding multiple synonyms for the same concept.
                 expansion = f" (related to: {formal_term}, {aliases[0]})"
-                if expansion not in expanded_query: # Avoid duplicate expansions
+                if expansion not in expanded_query:
                     expanded_query += expansion
-                break # Move to the next formal term
+                break
     return expanded_query
 
-# ==============================================================================
-# The Core RAG Logic (Cached for performance)
-# ==============================================================================
 @st.cache_resource
 def initialize_rag_chain():
-    # Load Documents, Split, etc. (same as before)
     loader = DirectoryLoader('knowledge_base/', glob="**/*.txt", show_progress=True)
     documents = loader.load()
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=350, chunk_overlap=50)
     texts = text_splitter.split_documents(documents)
-
-    # --- NEW: Use Google's Embedding Model ---
-    # It's powerful and designed to work with their LLMs.
-    embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key=st.secrets["GEMINI_API_KEY"])
+    
+    embeddings = GoogleGenerativeAIEmbeddings(
+        model="models/embedding-001", 
+        google_api_key=st.secrets["GEMINI_API_KEY"]
+    )
     
     vectorstore = Chroma.from_documents(documents=texts, embedding=embeddings)
-
-    # --- NEW: Initialize the Gemini LLM ---
-    # It will automatically use the API key from Streamlit's secrets.
-    llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", google_api_key=st.secrets["GEMINI_API_KEY"], temperature=0.3)
-
-    # Your new, more detailed domain glossary
+    
+    llm = ChatGoogleGenerativeAI(
+        model="gemini-1.5-flash", 
+        google_api_key=st.secrets["GEMINI_API_KEY"], 
+        temperature=0.3
+    )
+    
     domain_glossary = """
     - RAG: Retrieval-Augmented Generation; LLM answers grounded in retrieved documents.
     - Typology: Fraud category (the “scheme”) e.g., ATO, APP scam, BEC, mule.
@@ -99,12 +86,8 @@ def initialize_rag_chain():
     - UBO: Ultimate Beneficial Owner; real person controlling an entity.
     """
 
-    # Create the RAG Chain with the Final, Supercharged Prompt
     template = f"""
-    You are an expert fraud detection assistant. Your ONLY task is to answer the user's question based STRICTLY on the context provided below.
-    First, use the DOMAIN GLOSSARY to understand key terms. Then, carefully analyze the CONTEXT to find the answer.
-    Synthesize the information from the context into a clear, concise, and professional answer.
-    Do not use any of your prior knowledge. If the context does not contain the answer, you MUST say: "Based on the provided documents, I do not have enough information to answer that question."
+    You are an expert fraud detection assistant... (Your full V6 prompt)
 
     DOMAIN GLOSSARY:
     {domain_glossary}
@@ -117,11 +100,10 @@ def initialize_rag_chain():
 
     ANSWER:
     """
-
     QA_CHAIN_PROMPT = PromptTemplate.from_template(template)
-
-    retriever = vectorstore.as_retriever(search_type="mmr", search_kwargs={"k": 10})
-
+    
+    retriever = vectorstore.as_retriever(search_type="mmr", search_kwargs={"k": 8})
+    
     qa_chain = RetrievalQA.from_chain_type(
         llm, retriever=retriever, chain_type_kwargs={"prompt": QA_CHAIN_PROMPT}
     )
@@ -130,9 +112,7 @@ def initialize_rag_chain():
 # Initialize the chain
 qa_chain = initialize_rag_chain()
 
-# ==============================================================================
-# Streamlit Chat UI with Query Expansion
-# ==============================================================================
+# Streamlit Chat UI
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
@@ -147,10 +127,8 @@ if prompt := st.chat_input("Ask about a fraud pattern or typology..."):
 
     with st.chat_message("assistant"):
         with st.spinner("Analyzing..."):
-            # --- NEW: Expand the query before invoking the chain ---
             expanded_prompt = expand_query_with_synonyms(prompt, SYNONYM_MAP)
             
-            # Optional: Display the expanded query for debugging/transparency
             if expanded_prompt != prompt:
                 st.info(f"Searching with expanded query: *{expanded_prompt}*")
 

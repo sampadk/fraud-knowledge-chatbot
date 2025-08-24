@@ -1,7 +1,10 @@
 streamlit
 langchain
 langchain-community
-langchain-google-genai
+langchain-google-genai==1.0.3
 langchain-chroma
 langchain-text-splitters
 unstructured[local-inference]
+google-api-python-client==2.100.0
+google-api-core==2.15.0
+protobuf==3.20.3
