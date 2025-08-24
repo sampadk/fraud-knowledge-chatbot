@@ -1,15 +1,7 @@
-# streamlit_app.py (V8 - The Final Cloud-Native Version)
+# streamlit_app.py (V9 - The Final, Cleaned Version)
 
 import streamlit as st
-
-# --- Hot-patch for ChromaDB on Streamlit Cloud ---
-__import__('pysqlite3')
-import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
-# --- End of Hot-patch ---
-
 import re
-# --- NEW: Import Google's libraries ---
 from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 from langchain_community.document_loaders import DirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -129,7 +121,7 @@ def initialize_rag_chain():
     QA_CHAIN_PROMPT = PromptTemplate.from_template(template)
 
     retriever = vectorstore.as_retriever(search_type="mmr", search_kwargs={"k": 10})
-    
+
     qa_chain = RetrievalQA.from_chain_type(
         llm, retriever=retriever, chain_type_kwargs={"prompt": QA_CHAIN_PROMPT}
     )
