@@ -6,3 +6,4 @@ langchain-chroma
 unstructured
 python-magic
 sentence-transformers
+pysqlite3-binary

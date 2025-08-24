@@ -1,6 +1,16 @@
-# streamlit_app.py (V6 - Final Version with Synonym Expansion)
+# streamlit_app.py (V7 - The Final Deployment Version with ChromaDB Hot-Patch)
 
 import streamlit as st
+
+# --- NEW: Hot-patch for ChromaDB on Streamlit Cloud ---
+# This is a special fix for a known issue where the Streamlit cloud environment
+# has an incompatible version of SQLite. This code tells ChromaDB to use the
+# pysqlite3-binary package we just added to requirements.txt.
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+# --- End of Hot-patch ---
+
 import re
 from langchain_ollama import OllamaLLM
 from langchain_ollama.embeddings import OllamaEmbeddings
@@ -11,7 +21,7 @@ from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
 
 # App title and description
-st.title("AI Fraud Detection Assistant 🤖")
+st.title("AI Fraud Typology Assistant 🤖")
 st.write("This chatbot is powered by a curated knowledge base on fraud typologies and patterns. Ask a question to get started!")
 
 # ==============================================================================
@@ -111,7 +121,7 @@ def initialize_rag_chain():
 
     ANSWER:
     """
-    
+
     QA_CHAIN_PROMPT = PromptTemplate.from_template(template)
     
     retriever = vectorstore.as_retriever(search_type="mmr", search_kwargs={"k": 10})
