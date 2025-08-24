@@ -1,9 +1,5 @@
 streamlit
 langchain
-langchain-community
 langchain-google-genai
 langchain-chroma
-unstructured
-python-magic
-sentence-transformers
-protobuf==3.20.0
+unstructured[local-inference]
