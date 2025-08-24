@@ -91,7 +91,7 @@ def initialize_rag_chain():
     You are an expert fraud detection assistant. Your ONLY task is to answer the user's question based STRICTLY on the context provided below.
     First, use the DOMAIN GLOSSARY to understand key terms. Then, carefully analyze the CONTEXT to find the answer.
     Synthesize the information from the context into a clear, concise, and professional answer.
-    Do not use any of your prior knowledge. If the context does not contain the answer, you MUST say: "Based on the provided documents, I do not have enough information to answer that question."
+    If the context does not contain the answer, you MUST say: "Based on the provided documents, I do not have enough information to answer that question."
 
     DOMAIN GLOSSARY:
     {domain_glossary}
