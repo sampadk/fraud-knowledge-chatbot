@@ -1,0 +1,187 @@
+# Fraud Typologies
+*A practical, RAG‑friendly catalogue of common fraud and scam types with concise prevention steps.*
+
+## Identity Fraud (Third‑Party)
+**Description:** A fraudster uses someone else’s real identity without consent to open accounts, take loans, or transact.  
+**How to Avoid:** Strong KYC with document + biometric checks; device and IP risk scoring; knowledge‑based questions; watchlists for victimization history; account change alerts.
+
+## Synthetic Identity Fraud
+**Description:** A fabricated persona built by combining real and fake data (e.g., real national ID + fake name/DOB).  
+**How to Avoid:** Cross‑source identity resolution (credit bureau, government ID, phone/email tenure); velocity controls on new accounts; anomaly detection on age/SSN issuance; document + liveness checks.
+
+## First‑Party Fraud
+**Description:** A legitimate customer misrepresents intent or information (income, address, chargeback abuse) for gain.  
+**How to Avoid:** Income/affordability verification; repayment behavior modeling; fees/refund abuse throttling; risk‑based credit limits; blacklists for policy abuse.
+
+## Account Takeover (ATO)
+**Description:** Fraudster gains control of an existing account via stolen credentials, SIM‑swap, or social engineering.  
+**How to Avoid:** Adaptive MFA; device binding; impossible‑travel checks; step‑up for risky events (payee add, email/phone change); RAT/mobile malware detection.
+
+## Authorized Push Payment (APP) Scam
+**Description:** Victim is socially engineered to *authorize* a payment to the fraudster (often “urgent” or “safe account” stories).  
+**How to Avoid:** In‑journey scam warnings; confirmation of payee (name match); cooling‑off periods for first‑time payees; education nudges; inbound call verification flows.
+
+## Phishing / Vishing / Smishing
+**Description:** Deceptive emails, calls, or texts lure victims to reveal credentials/OTPs or to click malware links.  
+**How to Avoid:** Brand protection/DMARC; URL and call‑center intelligence; OTP sharing deterrents; customer education; real‑time link scanning in apps.
+
+## Business Email Compromise (BEC)
+**Description:** Compromised or spoofed business email instructs urgent payments or bank detail changes.  
+**How to Avoid:** Out‑of‑band verification for payment changes; supplier onboarding controls; anomaly checks on invoices; email security (SPF/DKIM/DMARC) and user training.
+
+## Card‑Not‑Present (CNP) Fraud
+**Description:** Stolen card details used online/phone without the card physically present.  
+**How to Avoid:** 3DS / SCA; device fingerprinting; behavioral biometrics; velocity and merchant anomaly checks; AVS/CVV validation.
+
+## Card‑Present (CP) Skimming/Shimming
+**Description:** Card data captured at compromised terminals/ATMs; later cloned.  
+**How to Avoid:** Chip‑and‑PIN; terminal tamper checks; geovelocity on card usage; ATM monitoring; fallback magstripe controls.
+
+## Card Testing
+**Description:** Bots test stolen card lists with small or $0 authorizations to find “live” cards.  
+**How to Avoid:** Rate limiting; bot/automation detection; CAPTCHA; merchant MCC screening for high‑risk test venues; anomaly on many small declines.
+
+## Chargeback / Friendly Fraud
+**Description:** Legit customer disputes legitimate transactions to get goods for free.  
+**How to Avoid:** Strong evidence capture (delivery, device, IP); refund/chargeback history modeling; negative option cancellation flows; chargeback guarantee partners.
+
+## Triangulation Fraud
+**Description:** Fraudster runs a fake storefront, fulfills with stolen cards to a drop address; victim thinks seller is legit.  
+**How to Avoid:** Marketplace vetting; unusual shipping address risk; card‑merchant distance checks; velocity across new merchants.
+
+## Refund / Return Abuse
+**Description:** Customer exploits lenient policies (empty box returns, wardrobing).  
+**How to Avoid:** Serial abuser detection; photo return proofs; restocking fees; returns scoring.
+
+## Loyalty / Points Fraud
+**Description:** Theft or abuse of reward points or coupon stacking.  
+**How to Avoid:** MFA for loyalty; unusual redemption alerts; coupon single‑use tokens; bot defense.
+
+## Loan Application Fraud
+**Description:** False data on loan apps to obtain credit.  
+**How to Avoid:** Income/employer verification; bank‑account aggregation; fraud consortium checks; application velocity controls.
+
+## Credit Bust‑Out
+**Description:** Synthetic/real identity builds good history then maxes out credit and disappears.  
+**How to Avoid:** Velocity on limit increases; sudden spend spikes; multi‑product credit monitoring; exit behavior modeling.
+
+## Mortgage / Auto Finance Fraud
+**Description:** Inflated income/asset docs, straw buyers, odometer rollbacks.  
+**How to Avoid:** Third‑party verifications; appraisal validation; VIN/odometer analytics; dealer risk scoring.
+
+## BNPL Fraud
+**Description:** Abusing buy‑now‑pay‑later at scale with synthetic/compromised identities.  
+**How to Avoid:** Device + identity graph; repayment telemetry; merchant risk; per‑session credit caps.
+
+## Insurance Claims Fraud
+**Description:** Staged/false claims (auto, health, gadget).  
+**How to Avoid:** Network analysis; duplicate claim detection; telematics/exif checks; provider/anomaly scoring.
+
+## Check/Cheque Fraud (Altered/Counterfeit/Kiting)
+**Description:** Forged or altered checks; kiting exploits float across accounts.  
+**How to Avoid:** Check image forensics; positive pay; deposit holds for risky items; cross‑bank velocity.
+
+## ACH / Direct Debit / SEPA Fraud
+**Description:** Unauthorized pulls/pushes, mandate abuse.  
+**How to Avoid:** Mandate verification; account tenure checks; name‑match; return rate monitoring.
+
+## Wire / RTP / Faster Payments Fraud
+**Description:** High‑value real‑time transfers to mule/crypto.  
+**How to Avoid:** Payee risk; first‑time payee friction; sanctions/adverse media checks; behavioral biometrics.
+
+## ATM Cash‑Out
+**Description:** Coordinated ATM withdrawals after card compromise/issuer breach.  
+**How to Avoid:** Withdrawal velocity; geo fence; chip fallback blocks; issuer/processor alerts.
+
+## Money Mule Activity
+**Description:** Individuals move illicit funds through their accounts for a fee.  
+**How to Avoid:** In/out fan‑in/fan‑out analytics; payroll pattern checks; mule typology scores; education + account offboarding.
+
+## Trade‑Based Money Laundering (TBML)
+**Description:** Over/under‑invoicing, phantom shipments to launder value.  
+**How to Avoid:** Trade data validation; price benchmarking; shipping/doc consistency; partner risk scoring.
+
+## Structuring / Smurfing
+**Description:** Breaking large cash/transactions into small amounts to avoid reporting thresholds.  
+**How to Avoid:** Aggregation across time/accounts; threshold proximity patterns; branch/device analytics.
+
+## Placement / Layering / Integration (Money Laundering Stages)
+**Description:** Classic ML stages moving illicit funds into, through, and back into the economy.  
+**How to Avoid:** End‑to‑end KYC, transaction monitoring, and asset tracing; network analytics; beneficial‑owner and source‑of‑funds checks.
+
+## Terrorist Financing
+**Description:** Funding acts of terrorism via small donations, charities, or trade.  
+**How to Avoid:** Sanctions/watchlists; charity due diligence; small‑value cumulative analytics; cross‑border monitoring.
+
+## Invoice Fraud / Supplier Impersonation
+**Description:** Fraudster changes supplier bank details to divert payments.  
+**How to Avoid:** Out‑of‑band confirmation; known‑good payee registry; approval workflow; anomaly on bank detail changes.
+
+## Payroll Diversion
+**Description:** Fraudster redirects employee salary to new account.  
+**How to Avoid:** HR/payroll change controls; dual approval; employee alerts on changes.
+
+## SIM Swap / Number Port‑Out
+**Description:** Phone number hijacked to intercept OTPs.  
+**How to Avoid:** Telco signals; SIM‑swap risk APIs; step‑up for phone changes; push‑based MFA.
+
+## Mobile Malware / RAT
+**Description:** Remote‑access tools on device allow fraudster to operate the app.  
+**How to Avoid:** Mobile integrity checks; root/jailbreak detection; screen overlay/RAT heuristics; session anomaly detection.
+
+## QR Code / Invoice Swap Scam
+**Description:** Fraudster replaces QR/invoice payee data with their own.  
+**How to Avoid:** Cryptographic invoice signing; in‑app QR validation; confirmation of payee.
+
+## Crypto Investment Scam / Rug Pull / Pig‑Butchering
+**Description:** Socially engineered “investments” into fake crypto projects; long‑con grooming.  
+**How to Avoid:** Exchange/merchant risk; scam education; cooling‑off periods; list of fraudulent wallets/domains.
+
+## NFT / Gaming Asset Fraud
+**Description:** Fake mints, phishing of private keys, item duplication.  
+**How to Avoid:** Wallet binding; signing prompts education; marketplace vetting; anomaly on high‑value transfers.
+
+## Marketplace / Merchant Fraud
+**Description:** Fake merchants, bust‑out, or collusive sellers.  
+**How to Avoid:** Merchant underwriting; early chargeback signals; shipping/fulfillment validation; review graph analysis.
+
+## Ticketing / Bot Scalping
+**Description:** Bots hoard tickets, resell at markup; card testing.  
+**How to Avoid:** Bot mitigation; per‑user caps; waitroom randomization; device reputation.
+
+## Gift Card Fraud
+**Description:** Stolen funds moved into gift cards; resale markets used.  
+**How to Avoid:** Gift card purchase velocity rules; MCC risk; activation delays; blocking resellers.
+
+## Elder Abuse / Caregiver Scam
+**Description:** Targeting seniors via romance/tech support scams.  
+**How to Avoid:** Outbound scam prompts; transaction purpose checks; cooling‑off; caregiver alerts/permissions.
+
+## Romance Scam
+**Description:** Emotional grooming to extract money or credentials.  
+**How to Avoid:** Education; risky narrative detection (“urgent medical bills”); first‑time cross‑border transfer friction.
+
+## Tech Support Scam
+**Description:** Fake “support” requests remote access/payment.  
+**How to Avoid:** In‑app warnings; merchant blocking; device RAT detection; hotline education.
+
+## Charity / Disaster Relief Scam
+**Description:** Fake charities post‑disaster solicit donations.  
+**How to Avoid:** Charity verification; donation beneficiary checks; campaign anomaly monitoring.
+
+## Credential Stuffing
+**Description:** Using breached passwords to log in and take over accounts.  
+**How to Avoid:** Rate limiting; bot detection; mandatory MFA; breach password checks.
+
+## Bot / Emulator Farm Abuse
+**Description:** Automated devices emulate users for sign‑ups, promos, or card testing.  
+**How to Avoid:** Device attestation; emulator detection; behavioral biometrics; anti‑automation controls.
+
+## Child Identity Theft
+**Description:** Minors’ identities used to open accounts or obtain credit.  
+**How to Avoid:** Age/ID issuance checks; parental consent flows; bureau locks for minors.
+
+## Deepfake / Voice Clone Fraud
+**Description:** Synthetic audio/video used to bypass verifications or social‑engineer staff.  
+**How to Avoid:** Challenge‑response liveness; multi‑factor beyond voice; staff training; anomaly detection on unusual requests.
+

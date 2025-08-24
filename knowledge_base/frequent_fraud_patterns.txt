@@ -1,0 +1,704 @@
+# Frequent Fraud Patterns
+*50 practical detection patterns with signals and linked typologies.*
+
+---
+
+## Pattern 1: Multiple New Accounts in Short Time
+**Pattern Description:** Fraud ring creates many accounts rapidly to exploit promos or test identities.
+**Details (Detection Signals):**
+- High sign‑up velocity from same IP/device/ASN
+- Shared PII artifacts (DOB, address fragments) across accounts
+- Common device fingerprints with minor token changes
+**Associated Typologies:** Identity Fraud (Third‑Party), Synthetic Identity Fraud, Bot / Emulator Farm Abuse
+
+---
+
+## Pattern 2: Card Testing via Micro‑Authorizations
+**Pattern Description:** Stolen card lists are tested with small amounts or $0 authorizations to find live cards.
+**Details (Detection Signals):**
+- Burst of <$2 authorizations at low‑risk merchants
+- High decline‑to‑approve ratio followed by few approvals
+- Shared device across many PANs
+**Associated Typologies:** Card‑Not‑Present (CNP) Fraud, Card Testing, Bot / Emulator Farm Abuse
+
+---
+
+## Pattern 3: Impossible Travel Login
+**Pattern Description:** Account accessed from two distant locations within an impossible time window.
+**Details (Detection Signals):**
+- Login from UK then minutes later from Asia/US
+- Different device OS and browser in close succession
+- Prior history shows stable geo
+**Associated Typologies:** Account Takeover (ATO)
+
+---
+
+## Pattern 4: First‑Time Payee + High‑Value RTP
+**Pattern Description:** Large real‑time payment to a brand‑new beneficiary after social engineering.
+**Details (Detection Signals):**
+- Payee added within last hour
+- Narrative includes ‘urgent’, ‘safe account’, or ‘invoice overdue’
+- Customer dismissed in‑app scam warning
+**Associated Typologies:** Authorized Push Payment (APP) Scam, Phishing / Vishing / Smishing, Business Email Compromise (BEC)
+
+---
+
+## Pattern 5: Account Details Change then Transfer
+**Pattern Description:** Email/phone/password changed, followed quickly by an outbound transfer.
+**Details (Detection Signals):**
+- Profile change + transfer within 30 minutes
+- New device or browser used for both events
+- IP reputation poor or TOR/proxy
+**Associated Typologies:** Account Takeover (ATO)
+
+---
+
+## Pattern 6: SIM‑Swap then OTP‑Heavy Actions
+**Pattern Description:** Number port‑out event followed by password reset and payments.
+**Details (Detection Signals):**
+- Telco SIM‑swap signal
+- OTP failures then success
+- New device enrollment
+**Associated Typologies:** SIM Swap / Number Port‑Out, Account Takeover (ATO)
+
+---
+
+## Pattern 7: Dormant Account Reactivation Cash‑Out
+**Pattern Description:** Long‑dormant account wakes and rapidly drains funds.
+**Details (Detection Signals):**
+- No activity for 180+ days then burst of transfers
+- New payees and cross‑border destinations
+- Device mismatch with historical profile
+**Associated Typologies:** Account Takeover (ATO), Money Mule Activity
+
+---
+
+## Pattern 8: Fan‑In then Fan‑Out Mule Pattern
+**Pattern Description:** Many small inbound credits consolidate and quickly fan‑out to other accounts or crypto.
+**Details (Detection Signals):**
+- Multiple unique senders, similar amounts
+- Short holding time (<2 hours)
+- Outbound to exchanges or high‑risk banks
+**Associated Typologies:** Money Mule Activity, Wire / RTP / Faster Payments Fraud, Crypto Investment Scam / Rug Pull / Pig‑Butchering
+
+---
+
+## Pattern 9: Payroll Diversion Before Payday
+**Pattern Description:** Employee salary bank details changed just before payroll run.
+**Details (Detection Signals):**
+- Change of pay‑to account within 72 hours of payday
+- Request via email without standard approval
+- Target account recently opened / high‑risk institution
+**Associated Typologies:** Payroll Diversion, Business Email Compromise (BEC)
+
+---
+
+## Pattern 10: Supplier Bank Change Email
+**Pattern Description:** Invoice with updated bank details sent from compromised/similar domain.
+**Details (Detection Signals):**
+- Email domain lookalike (typosquatting)
+- Bank country differs from supplier history
+- Change requested outside business hours
+**Associated Typologies:** Invoice Fraud / Supplier Impersonation, Business Email Compromise (BEC)
+
+---
+
+## Pattern 11: Over/Under Invoicing (TBML)
+**Pattern Description:** Trade invoices priced far from market norms to move value covertly.
+**Details (Detection Signals):**
+- Unit price deviates from benchmark indexes
+- Mismatch between shipping docs and goods
+- Counterparty risk high, weak KYC
+**Associated Typologies:** Trade‑Based Money Laundering (TBML)
+
+---
+
+## Pattern 12: Structuring Near Thresholds
+**Pattern Description:** Cash/transactions split just under reporting thresholds across days/branches.
+**Details (Detection Signals):**
+- Amounts repeatedly at 0.9× threshold
+- Multiple branches/ATMs used
+- Same device used across different identities
+**Associated Typologies:** Structuring / Smurfing
+
+---
+
+## Pattern 13: Bust‑Out Spending Spike
+**Pattern Description:** Credit line usage jumps to 100% after gradual build of good behavior.
+**Details (Detection Signals):**
+- Limit increases accepted rapidly
+- Cash advances + luxury merchant categories
+- No repayments post‑spike
+**Associated Typologies:** Credit Bust‑Out, First‑Party Fraud
+
+---
+
+## Pattern 14: BNPL Hit‑and‑Run
+**Pattern Description:** Multiple BNPL purchases with minimal repayment history, then default.
+**Details (Detection Signals):**
+- Fresh identities/devices
+- High ticket electronics/fashion MCCs
+- Delivery to reshipper addresses
+**Associated Typologies:** BNPL Fraud, Synthetic Identity Fraud, First‑Party Fraud
+
+---
+
+## Pattern 15: Document Forgery Signals
+**Pattern Description:** Tampered ID/statement used for onboarding or loan application.
+**Details (Detection Signals):**
+- EXIF anomalies; inconsistent fonts/kerning
+- MRZ checksum failures; hologram mismatch
+- Liveness failure / selfie mismatch
+**Associated Typologies:** Identity Fraud (Third‑Party), Synthetic Identity Fraud, Loan Application Fraud
+
+---
+
+## Pattern 16: Device Farm / Emulator Footprints
+**Pattern Description:** Large volume of sign‑ups from emulated devices or rooted phones.
+**Details (Detection Signals):**
+- No hardware attestation, identical build fingerprints
+- Randomized device IDs with repeating patterns
+- Perfectly regular inter‑event timing
+**Associated Typologies:** Bot / Emulator Farm Abuse, Card Testing, Identity Fraud (Third‑Party)
+
+---
+
+## Pattern 17: Card‑Present Fallback Abuse
+**Pattern Description:** Forced magstripe fallback after chip‑declines at multiple merchants.
+**Details (Detection Signals):**
+- Chip failure followed by magstripe approval
+- Geo spread within hours
+- Merchant terminal tamper alerts
+**Associated Typologies:** Card‑Present (CP) Skimming/Shimming
+
+---
+
+## Pattern 18: CNP AVS/CVV Mismatch Burst
+**Pattern Description:** High rate of AVS/CVV mismatches preceding a few approvals.
+**Details (Detection Signals):**
+- Same device/browser tries many PANs
+- Unusual hours; bot‑like cadence
+- IP from hosting providers
+**Associated Typologies:** Card‑Not‑Present (CNP) Fraud, Card Testing
+
+---
+
+## Pattern 19: Refund Abuse Loop
+**Pattern Description:** Customer repeatedly claims non‑receipt/defect to obtain refunds while retaining goods.
+**Details (Detection Signals):**
+- Return rate >> cohort
+- Dispute/chargeback clustering
+- Delivery confirmation vs claim mismatch
+**Associated Typologies:** Refund / Return Abuse, Chargeback / Friendly Fraud
+
+---
+
+## Pattern 20: Marketplace Triangulation
+**Pattern Description:** Orders fulfilled to buyers using stolen cards shipped to drop points.
+**Details (Detection Signals):**
+- Seller account new with high sales velocity
+- Shipping to freight forwarders/reshippers
+- Chargebacks concentrate on seller
+**Associated Typologies:** Triangulation Fraud, Marketplace / Merchant Fraud, Card‑Not‑Present (CNP) Fraud
+
+---
+
+## Pattern 21: Loyalty Points Drain
+**Pattern Description:** Compromised loyalty accounts converted to e‑gift cards or travel quickly.
+**Details (Detection Signals):**
+- Login from new geo/device then redemption
+- Large redemption to gift cards
+- Email change precedes redemption
+**Associated Typologies:** Loyalty / Points Fraud, Account Takeover (ATO)
+
+---
+
+## Pattern 22: Merchant Bust‑Out
+**Pattern Description:** New merchant ramps volume then disappears after chargebacks hit.
+**Details (Detection Signals):**
+- Unusual MCC for new entity
+- Sparse digital footprint; mismatched address
+- Spike then silence
+**Associated Typologies:** Marketplace / Merchant Fraud, Chargeback / Friendly Fraud
+
+---
+
+## Pattern 23: ATM Cash‑Out Coordination
+**Pattern Description:** Many withdrawals across ATMs in tight windows using compromised cards.
+**Details (Detection Signals):**
+- Fan‑out across ATMs/cities
+- EMV fallback usage
+- Issuer compromise indicators
+**Associated Typologies:** ATM Cash‑Out, Card‑Present (CP) Skimming/Shimming
+
+---
+
+## Pattern 24: ACH/Direct Debit Reversal Abuse
+**Pattern Description:** Pulls funds then triggers reversals/returns to avoid detection.
+**Details (Detection Signals):**
+- High return codes (R07/R10 etc.)
+- New mandate with immediate large pull
+- Name mismatch signals
+**Associated Typologies:** ACH / Direct Debit / SEPA Fraud
+
+---
+
+## Pattern 25: Check Deposit Image Tamper
+**Pattern Description:** Altered check images via mobile deposit followed by quick withdrawal.
+**Details (Detection Signals):**
+- Image forensics flags (font/edge anomalies)
+- Deposit to cash withdrawal within hours
+- New device used for deposit
+**Associated Typologies:** Check/Cheque Fraud (Altered/Counterfeit/Kiting)
+
+---
+
+## Pattern 26: Kiting Float Exploit
+**Pattern Description:** Transfers across accounts to exploit clearing times and create artificial balances.
+**Details (Detection Signals):**
+- Cyclic transfers between linked accounts
+- Balances peak before clearing
+- Repeated near weekends/holidays
+**Associated Typologies:** Check/Cheque Fraud (Altered/Counterfeit/Kiting), Structuring / Smurfing
+
+---
+
+## Pattern 27: Crypto Off‑Ramp Spree
+**Pattern Description:** Rapid transfers to multiple exchanges following suspicious inflows.
+**Details (Detection Signals):**
+- Beneficiaries are known exchanges/OTCs
+- Small hold time; round amounts
+- Source accounts high risk
+**Associated Typologies:** Wire / RTP / Faster Payments Fraud, Money Mule Activity, Crypto Investment Scam / Rug Pull / Pig‑Butchering
+
+---
+
+## Pattern 28: QR Invoice Replacement
+**Pattern Description:** Invoice PDF QR points to altered payee account.
+**Details (Detection Signals):**
+- Checksum/signature mismatch
+- Payee name mismatch vs registry
+- First‑time payee + high amount
+**Associated Typologies:** QR Code / Invoice Swap Scam, Invoice Fraud / Supplier Impersonation
+
+---
+
+## Pattern 29: Deepfake CEO Voice Request
+**Pattern Description:** Audio call from ‘CEO’ requests urgent wire with secrecy.
+**Details (Detection Signals):**
+- Call outside office hours
+- No prior approval chain
+- Phone number spoof; audio artifacts
+**Associated Typologies:** Business Email Compromise (BEC), Deepfake / Voice Clone Fraud, Wire / RTP / Faster Payments Fraud
+
+---
+
+## Pattern 30: Remote Access Tool on Session
+**Pattern Description:** RAT on mobile/desktop controlling banking session.
+**Details (Detection Signals):**
+- OS overlay/Accessibility API misuse
+- Clipboard scraping/automation traces
+- Screen sharing detected
+**Associated Typologies:** Mobile Malware / RAT, Account Takeover (ATO)
+
+---
+
+## Pattern 31: Elder Abuse Narrative
+**Pattern Description:** Transfers with notes like ‘grandson emergency’ or repeated help stories.
+**Details (Detection Signals):**
+- Repeated domestic transfers with similar memos
+- New payees related to care services
+- Customer age >70
+**Associated Typologies:** Elder Abuse / Caregiver Scam, Authorized Push Payment (APP) Scam
+
+---
+
+## Pattern 32: Romance Grooming Pattern
+**Pattern Description:** Small gifts escalating to large international transfers to ‘partner’.
+**Details (Detection Signals):**
+- Payments to money services/crypto
+- Chat app references in memos
+- Prior warnings ignored
+**Associated Typologies:** Romance Scam, Authorized Push Payment (APP) Scam
+
+---
+
+## Pattern 33: Tech Support Remote Control
+**Pattern Description:** Victim grants remote access; payments to ‘support fee’ merchants.
+**Details (Detection Signals):**
+- RAT signals; MCC for tech support
+- Phone call records preceding payment
+- Multiple refunds/chargebacks later
+**Associated Typologies:** Tech Support Scam, Account Takeover (ATO)
+
+---
+
+## Pattern 34: Charity Spike Post‑Disaster
+**Pattern Description:** Donations surge to newly created charities after disasters.
+**Details (Detection Signals):**
+- New merchant with charity MCC
+- Domain age < 30 days
+- High cross‑border donations
+**Associated Typologies:** Charity / Disaster Relief Scam, Terrorist Financing
+
+---
+
+## Pattern 35: Credential Stuffing Burst
+**Pattern Description:** Mass login attempts with breached credentials across many accounts.
+**Details (Detection Signals):**
+- High login failure rate from few IPs
+- User agents common to automation
+- Followed by ATO on successes
+**Associated Typologies:** Credential Stuffing, Account Takeover (ATO), Bot / Emulator Farm Abuse
+
+---
+
+## Pattern 36: Device/Email Mismatch Triangle
+**Pattern Description:** New device + new email + high‑risk IP just before payout.
+**Details (Detection Signals):**
+- Triple change within short window
+- No historical trust on device
+- Email domain disposable/alias
+**Associated Typologies:** Account Takeover (ATO), Identity Fraud (Third‑Party)
+
+---
+
+## Pattern 37: Address Reshipper Signature
+**Pattern Description:** Shipments to known reshipper/warehouse addresses used by fraud rings.
+**Details (Detection Signals):**
+- Address on public reshipper lists
+- Multiple unrelated buyers to same address
+- High value consumer electronics
+**Associated Typologies:** Card‑Not‑Present (CNP) Fraud, Marketplace / Merchant Fraud, Triangulation Fraud
+
+---
+
+## Pattern 38: Gift Card Purchase Velocity
+**Pattern Description:** Sudden series of large gift card purchases often linked to scams.
+**Details (Detection Signals):**
+- POS/e‑com gift card MCCs
+- Round amounts; multiple issuers
+- Customer warned previously
+**Associated Typologies:** Gift Card Fraud, Authorized Push Payment (APP) Scam
+
+---
+
+## Pattern 39: Name Mismatch on Confirmation of Payee
+**Pattern Description:** Payee name doesn’t match account holder on fast payments.
+**Details (Detection Signals):**
+- CoP mismatch or partial match
+- Urgency language present
+- New payee with high amount
+**Associated Typologies:** Authorized Push Payment (APP) Scam, Invoice Fraud / Supplier Impersonation
+
+---
+
+## Pattern 40: Unusual MCC for Customer Profile
+**Pattern Description:** Spend at high‑risk merchant categories not seen before.
+**Details (Detection Signals):**
+- MCC deviation score spike
+- Nighttime or cross‑border use
+- Precedes chargebacks
+**Associated Typologies:** Card‑Not‑Present (CNP) Fraud, Chargeback / Friendly Fraud
+
+---
+
+## Pattern 41: Network Linkage to Known Mule
+**Pattern Description:** Account shares attributes with confirmed mule accounts.
+**Details (Detection Signals):**
+- Shared device/phone/address
+- Common payees/beneficiaries
+- Behavioral similarity clusters
+**Associated Typologies:** Money Mule Activity
+
+---
+
+## Pattern 42: Supplier Onboarding with Forged Docs
+**Pattern Description:** New supplier submits fake registration/ownership documents.
+**Details (Detection Signals):**
+- Beneficial owner data cannot be verified
+- Document tamper signs (metadata/fonts)
+- Bank details in high‑risk country
+**Associated Typologies:** Marketplace / Merchant Fraud, Invoice Fraud / Supplier Impersonation, Identity Fraud (Third‑Party)
+
+---
+
+## Pattern 43: Overnight Limit Increase then Spending
+**Pattern Description:** Customer receives limit bump then maxes out immediately.
+**Details (Detection Signals):**
+- No income change to justify increase
+- High‑risk MCCs; cash advances
+- No subsequent repayments
+**Associated Typologies:** Credit Bust‑Out, First‑Party Fraud
+
+---
+
+## Pattern 44: ATM Geo Hopping
+**Pattern Description:** Withdrawals in cities far apart within short windows.
+**Details (Detection Signals):**
+- Back‑to‑back ATM hits >200km apart
+- Shared PAN/device across ATMs
+- Fallback method usage
+**Associated Typologies:** ATM Cash‑Out, Card‑Present (CP) Skimming/Shimming
+
+---
+
+## Pattern 45: ACH Mandate Abnormality
+**Pattern Description:** New ACH mandate created with immediate large pull and high return risk.
+**Details (Detection Signals):**
+- Account age < 30 days
+- Name/owner mismatch
+- High RTP to third parties post‑pull
+**Associated Typologies:** ACH / Direct Debit / SEPA Fraud
+
+---
+
+## Pattern 46: E‑commerce Promo Abuse
+**Pattern Description:** Multiple accounts exploit coupon stacks and referrals.
+**Details (Detection Signals):**
+- Device graph shows many accounts
+- Unusual promo redemption patterns
+- Shared payment instruments
+**Associated Typologies:** First‑Party Fraud, Bot / Emulator Farm Abuse
+
+---
+
+## Pattern 47: Biometric Bypass Anomalies
+**Pattern Description:** Failed liveness followed by success after unusual conditions.
+**Details (Detection Signals):**
+- Face angle/lighting anomalies
+- Frequent retries from same device
+- High‑risk IP or remote desktop
+**Associated Typologies:** Identity Fraud (Third‑Party), Account Takeover (ATO)
+
+---
+
+## Pattern 48: Supplier Payment Split
+**Pattern Description:** Single invoice split into many smaller transfers to multiple accounts.
+**Details (Detection Signals):**
+- Amounts near internal approval thresholds
+- New beneficiary accounts
+- Change requested by email only
+**Associated Typologies:** Invoice Fraud / Supplier Impersonation, Structuring / Smurfing
+
+---
+
+## Pattern 49: Customer Ignores Scam Warning
+**Pattern Description:** User proceeds after in‑app scam interstitial warning.
+**Details (Detection Signals):**
+- Warning displayed → continue clicked
+- High‑risk narrative keywords
+- First‑time payee + large RTP
+**Associated Typologies:** Authorized Push Payment (APP) Scam, Phishing / Vishing / Smishing
+
+---
+
+## Pattern 50: Phone/Email Churn Pattern
+**Pattern Description:** Frequent changes to contact info without clear reason.
+**Details (Detection Signals):**
+- Multiple email/phone updates in 30 days
+- Disposable domains; VOIP numbers
+- Coincides with disputes/refunds
+**Associated Typologies:** Account Takeover (ATO), First‑Party Fraud, Identity Fraud (Third‑Party)
+
+---
+
+## Pattern 51: High‑Risk Country Bridge
+**Pattern Description:** Funds routed through intermediaries in high‑risk jurisdictions.
+**Details (Detection Signals):**
+- Beneficiaries in sanctioned/grey‑listed countries
+- Layering via multiple hops
+- Mismatch with customer profile
+**Associated Typologies:** Placement / Layering / Integration (Money Laundering Stages), Terrorist Financing
+
+---
+
+## Pattern 52: Insurance Repeat Claim Fingerprint
+**Pattern Description:** Similar claim narratives/items across customers/providers.
+**Details (Detection Signals):**
+- Text similarity in claims
+- Same repair shops/providers
+- EXIF/telematics inconsistencies
+**Associated Typologies:** Insurance Claims Fraud
+
+---
+
+## Pattern 53: Mortgage Straw Buyer Indicators
+**Pattern Description:** Third party purchases property for someone else using falsified docs.
+**Details (Detection Signals):**
+- Income/employment unverifiable
+- Multiple mortgages tied to one address
+- Down payment from unrelated third parties
+**Associated Typologies:** Mortgage / Auto Finance Fraud, Identity Fraud (Third‑Party)
+
+---
+
+## Pattern 54: Overnight E‑Gift Card Drains
+**Pattern Description:** Large redemptions happen at unusual hours to digital goods.
+**Details (Detection Signals):**
+- Midnight‑3am spikes
+- Multiple brands/providers
+- New device + IP risk
+**Associated Typologies:** Loyalty / Points Fraud, Card‑Not‑Present (CNP) Fraud
+
+---
+
+## Pattern 55: Trade Route Mismatch
+**Pattern Description:** Shipping route inconsistent with goods (e.g., heavy items via improbable lanes).
+**Details (Detection Signals):**
+- Port/route anomaly vs historic trade
+- Insurance/shipping docs mismatch
+- Counterparty with low transparency
+**Associated Typologies:** Trade‑Based Money Laundering (TBML)
+
+---
+
+## Pattern 56: Round‑Dollar Repeats
+**Pattern Description:** Series of round‑dollar transfers indicative of laundering or structuring.
+**Details (Detection Signals):**
+- Unusual round amounts repeated
+- Timing aligned to reporting cutoffs
+- Multiple counterparties with short relationships
+**Associated Typologies:** Structuring / Smurfing, Placement / Layering / Integration (Money Laundering Stages)
+
+---
+
+## Pattern 57: App Session Spoof Indicators
+**Pattern Description:** Automation frameworks mimic human taps to bypass controls.
+**Details (Detection Signals):**
+- Zero variance in inter‑tap timings
+- Accessibility API anomalies
+- No sensor noise (accelerometer/gyroscope)
+**Associated Typologies:** Mobile Malware / RAT, Bot / Emulator Farm Abuse
+
+---
+
+## Pattern 58: Trade Charity Conduit
+**Pattern Description:** Charity accounts used as pass‑through for suspicious funds.
+**Details (Detection Signals):**
+- High in/out with minimal program spend
+- Donor concentration unusual
+- Cross‑border beneficiaries in high‑risk areas
+**Associated Typologies:** Terrorist Financing, Placement / Layering / Integration (Money Laundering Stages), Charity / Disaster Relief Scam
+
+---
+
+## Pattern 59: New Device + High‑Value First Transaction
+**Pattern Description:** Immediately after new device enrollment, user sends a large payment.
+**Details (Detection Signals):**
+- Device not seen before
+- Enrollment and transfer in same session
+- Beneficiary is new
+**Associated Typologies:** Account Takeover (ATO), Authorized Push Payment (APP) Scam
+
+---
+
+## Pattern 60: Supplier Country Flip
+**Pattern Description:** Supplier bank country suddenly changes to unrelated jurisdiction.
+**Details (Detection Signals):**
+- Historical country ≠ new bank country
+- Email request only
+- No updated contract docs
+**Associated Typologies:** Invoice Fraud / Supplier Impersonation, Business Email Compromise (BEC)
+
+---
+
+## Pattern 61: P2P Carousel
+**Pattern Description:** Funds circulate through a small ring of P2P accounts then exit.
+**Details (Detection Signals):**
+- Graph cycle detected
+- Short dwell time
+- Exit to mule/exchange
+**Associated Typologies:** Money Mule Activity, Placement / Layering / Integration (Money Laundering Stages)
+
+---
+
+## Pattern 62: Crypto Investment Narrative
+**Pattern Description:** Payments/memos reference ‘broker’, ‘trading coach’, ‘guaranteed returns’.
+**Details (Detection Signals):**
+- Repeated references in notes
+- Transfers to exchanges/OTCs
+- Prior scam warning ignored
+**Associated Typologies:** Crypto Investment Scam / Rug Pull / Pig‑Butchering, Authorized Push Payment (APP) Scam
+
+---
+
+## Pattern 63: Phone Port‑Out + CoP Mismatch
+**Pattern Description:** After number port‑out, user pays a mismatched payee name.
+**Details (Detection Signals):**
+- Telco port‑out signal
+- CoP partial/failed match
+- Urgent language in memo
+**Associated Typologies:** SIM Swap / Number Port‑Out, Authorized Push Payment (APP) Scam
+
+---
+
+## Pattern 64: Travel Corridor Outlier
+**Pattern Description:** Transfers to corridors atypical for user demographic/behavior.
+**Details (Detection Signals):**
+- New country pair
+- High corridor risk score
+- No prior ties (contacts/relatives)
+**Associated Typologies:** Wire / RTP / Faster Payments Fraud, Placement / Layering / Integration (Money Laundering Stages)
+
+---
+
+## Pattern 65: Subscription Sign‑Up Storm
+**Pattern Description:** Many trial sign‑ups from same device/IP; later chargebacks.
+**Details (Detection Signals):**
+- Promo abuse indicators
+- Device reuse across identities
+- High churn post‑trial
+**Associated Typologies:** First‑Party Fraud, Bot / Emulator Farm Abuse, Chargeback / Friendly Fraud
+
+---
+
+## Pattern 66: Unusual Cash Deposit + Immediate Wire
+**Pattern Description:** Large cash deposited then wired abroad quickly.
+**Details (Detection Signals):**
+- Cash in branch/ATM
+- Wire within hours
+- Customer new or thin file
+**Associated Typologies:** Placement / Layering / Integration (Money Laundering Stages), Structuring / Smurfing
+
+---
+
+## Pattern 67: Address/Email Overlap Across Customers
+**Pattern Description:** Many customers share same address/email root.
+**Details (Detection Signals):**
+- Shared PO boxes/reshippers
+- Plus‑aliasing on emails
+- Clustered creation dates
+**Associated Typologies:** Synthetic Identity Fraud, Identity Fraud (Third‑Party)
+
+---
+
+## Pattern 68: Unseen Device at New Merchant
+**Pattern Description:** Card used at a risky new merchant on a never‑seen device/browser.
+**Details (Detection Signals):**
+- Device hash new
+- Merchant high risk
+- Prior declines elsewhere
+**Associated Typologies:** Card‑Not‑Present (CNP) Fraud
+
+---
+
+## Pattern 69: ATM Balance Inquiry Patterns
+**Pattern Description:** Many balance inquiries preceding withdrawals as actors probe limits.
+**Details (Detection Signals):**
+- Unusual inquiry velocity
+- Spread across ATMs
+- Withdrawals follow within minutes
+**Associated Typologies:** ATM Cash‑Out
+
+---
+
+## Pattern 70: Overnight Supplier Creation
+**Pattern Description:** New supplier created and paid outside business hours.
+**Details (Detection Signals):**
+- Creation + payment within 24h
+- Approver off on leave
+- IP from remote location/VPN
+**Associated Typologies:** Invoice Fraud / Supplier Impersonation, Business Email Compromise (BEC)
+
+---
