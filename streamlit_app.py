@@ -278,11 +278,11 @@ if prompt := st.chat_input("Ask about a fraud typology, pattern, or signals…")
             cleaned = _dedupe_sentences(answer) if answer else answer
 
             st.markdown(cleaned if cleaned else "_No answer produced._")
-            if sources:
-                st.markdown("**Sources used:**")
-                for i, doc in enumerate(sources, start=1):
-                    fname = os.path.basename(doc.metadata.get("source", "document.txt"))
-                    section = doc.metadata.get("section", "Section")
-                    st.markdown(f"- {i}. `{fname}` — _{section}_")
+     #       if sources:
+     #           st.markdown("**Sources used:**")
+     #           for i, doc in enumerate(sources, start=1):
+     #               fname = os.path.basename(doc.metadata.get("source", "document.txt"))
+     #               section = doc.metadata.get("section", "Section")
+     #               st.markdown(f"- {i}. `{fname}` — _{section}_")
 
     st.session_state.messages.append({"role": "assistant", "content": cleaned if answer else answer})
