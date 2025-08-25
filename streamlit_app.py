@@ -224,7 +224,7 @@ def initialize_rag_chain(temp: float, retriever_k: int):
 
     # LLM
     llm = ChatGoogleGenerativeAI(
-        model="models/gemini-1.5-flash",
+        model="models/gemini-2.5-flash-lite",
         google_api_key=st.secrets["GEMINI_API_KEY"],
         temperature=temp,
         top_p=0.9,
