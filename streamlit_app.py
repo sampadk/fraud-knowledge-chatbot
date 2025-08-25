@@ -1,10 +1,10 @@
-# streamlit_app.py (V10 - Final Stable Version)
+# streamlit_app.py (V12 - Stable Dependencies Version)
 
 import streamlit as st
 import re
 from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 from langchain_community.document_loaders import DirectoryLoader
-from langchain_community.document_loaders import TextLoader
+from langchain_community.document_loaders import TextLoader # Ensure this is here
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 from langchain.prompts import PromptTemplate
