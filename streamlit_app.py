@@ -199,7 +199,7 @@ with st.sidebar:
     persist_dir = st.text_input("Chroma persist directory", value=".chroma")
     rebuild = st.button("Rebuild index (force re-embed)")
     st.markdown("---")
-    st.markdown("**Secrets**: Set `GEMINI_API_KEY` in Streamlit Cloud → App → Settings → Secrets.")
+    #st.markdown("**Secrets**: Set `GEMINI_API_KEY` in Streamlit Cloud → App → Settings → Secrets.")
 
 # --- Initialize chain (and optionally rebuild index) ---
 api_key = st.secrets.get("GEMINI_API_KEY", "")
