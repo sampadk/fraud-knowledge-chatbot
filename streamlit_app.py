@@ -12,8 +12,8 @@ from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
 
 # App title and description
-st.title("AI Fraud Detection Assistant 🤖")
-st.write("This chatbot is powered by Google's Gemini model and a curated knowledge base. Ask a question to get started!")
+st.title("AI Fraud Risk Whisperer 🤖")
+st.write("This chatbot is powered by Google's Gemini model and a curated knowledge base (using RAG). Ask a question to get started!")
 
 # Your full Synonym Map
 SYNONYM_MAP = {
