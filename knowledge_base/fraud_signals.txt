@@ -1,0 +1,162 @@
+# Fraud Signals and Patterns for FinCrime Professionals
+
+This file lists common **fraud signals** across major fraud typologies and why they matter.  
+
+---
+
+## Signals for: Identity Fraud (Third-Party) & Account Takeover (ATO)
+- **Signal:** Login from a new device or unrecognized location.  
+  - **Why it Matters:** A sudden shift in geography (e.g., login from Nigeria 10 minutes after one from New York) or device type is a classic ATO indicator.  
+- **Signal:** High velocity of profile changes immediately after login.  
+  - **Why it Matters:** Legitimate users rarely change password, email, phone, and address within minutes. Fraudsters do this to lock the real user out.  
+- **Signal:** Mismatch between device language/timezone and expected user profile.  
+  - **Why it Matters:** A user in the USA but with device language set to Russian and timezone GMT+3 is high risk.  
+- **Signal:** Use of VPNs, proxies, or Tor exit nodes.  
+  - **Why it Matters:** While not always malicious, fraudsters rely heavily on obfuscation.  
+- **Signal:** Multiple failed login attempts followed by success.  
+  - **Why it Matters:** Suggests credential stuffing or brute force.  
+- **Signal:** SIM swap detected before account recovery.  
+  - **Why it Matters:** Fraudsters hijack phone numbers to intercept OTPs.  
+
+---
+
+## Signals for: Synthetic Identity Fraud
+- **Signal:** Thin credit file with no long-term history.  
+  - **Why it Matters:** Synthetics lack deep history (mortgages, car loans).  
+- **Signal:** PII data inconsistencies (SSN vs. DOB vs. address).  
+  - **Why it Matters:** Fraudsters combine mismatched data from multiple sources.  
+- **Signal:** Multiple applications with slight PII variations.  
+  - **Why it Matters:** Automation tests system weaknesses with near-duplicate identities.  
+- **Signal:** High number of authorized user tradelines.  
+  - **Why it Matters:** Fraudsters piggyback synthetic IDs on legitimate accounts to boost credit scores.  
+- **Signal:** Discrepancy between phone/email tenure and applicant age.  
+  - **Why it Matters:** A 40-year-old with a 1-month-old phone number is suspicious.  
+
+---
+
+## Signals for: Authorized Push Payment (APP) Scam & Social Engineering
+- **Signal:** Customer overrides in-app scam warnings.  
+  - **Why it Matters:** Genuine users rarely ignore red flags; scammers coach victims to click through.  
+- **Signal:** Urgency narrative in payment memos (“safe account,” “urgent transfer”).  
+  - **Why it Matters:** Fraudsters use urgency to bypass rational thinking.  
+- **Signal:** Large first-time transfer to a new payee.  
+  - **Why it Matters:** Victims often add a fraudster’s account right before a scam transfer.  
+- **Signal:** Multiple calls/chats with bank staff before transfer.  
+  - **Why it Matters:** Fraudsters guide victims step by step.  
+- **Signal:** Payments outside customer’s typical pattern (new country, new merchant type).  
+  - **Why it Matters:** Sudden anomalies suggest manipulation.  
+
+---
+
+## Signals for: Business Email Compromise (BEC) & Invoice Fraud
+- **Signal:** Supplier bank account changes with urgency.  
+  - **Why it Matters:** Classic BEC tactic—switch beneficiary details.  
+- **Signal:** Domain look-alike in sender email.  
+  - **Why it Matters:** Example: `@supplier.co` vs `@supp1ier.co`.  
+- **Signal:** Payment requests outside normal business hours.  
+  - **Why it Matters:** Fraudsters exploit reduced oversight.  
+- **Signal:** Sudden change in invoice template style or metadata.  
+  - **Why it Matters:** Forged invoices often look subtly different.  
+- **Signal:** High-value invoice inconsistent with contract history.  
+  - **Why it Matters:** Fraudsters inflate invoices to steal more in one hit.  
+
+---
+
+## Signals for: Money Mule Activity
+- **Signal:** Rapid in-and-out transactions with little balance retention.  
+  - **Why it Matters:** Mule accounts pass funds quickly to avoid detection.  
+- **Signal:** Multiple credits from unrelated sources followed by fan-out.  
+  - **Why it Matters:** Indicates layering in laundering.  
+- **Signal:** Salary account suddenly used for large transfers.  
+  - **Why it Matters:** Students or unemployed people recruited as mules.  
+- **Signal:** Geographic inconsistency between origin and destination.  
+  - **Why it Matters:** Cross-border mule chains spread funds globally.  
+- **Signal:** Customers recruited via “easy money” job ads.  
+  - **Why it Matters:** Classic mule recruitment vector.  
+
+---
+
+## Signals for: Card-Not-Present (CNP) & Payments Fraud
+- **Signal:** Velocity of small-value authorizations.  
+  - **Why it Matters:** Fraudsters test stolen cards with micro charges.  
+- **Signal:** Mismatch between billing/shipping address.  
+  - **Why it Matters:** Legitimate customers rarely ship to unrelated addresses.  
+- **Signal:** Unusual MCC (merchant category code) for the customer.  
+  - **Why it Matters:** Fraudsters use compromised cards for high-resale goods.  
+- **Signal:** Multiple cards used from same device/browser fingerprint.  
+  - **Why it Matters:** Suggests testing of stolen card batches.  
+- **Signal:** High number of declined transactions before one succeeds.  
+  - **Why it Matters:** Indicates brute-force guessing of CVV/expiry.  
+
+---
+
+## Signals for: Loan & Credit Application Fraud
+- **Signal:** Employment or income documents inconsistent with format norms.  
+  - **Why it Matters:** Forged pay stubs and fake HR letters are common.  
+- **Signal:** Short tenure on phone/email compared to age.  
+  - **Why it Matters:** New accounts may support fake identities.  
+- **Signal:** Repeated applications across multiple lenders in a short time.  
+  - **Why it Matters:** Fraudsters shotgun-apply to maximize success.  
+- **Signal:** Shared contact info across multiple applications.  
+  - **Why it Matters:** Same phone/email linked to many borrowers is suspicious.  
+- **Signal:** Spike in new accounts in the same geographic area.  
+  - **Why it Matters:** Suggests organized fraud rings.  
+
+---
+
+## Signals for: Crypto & Digital Asset Fraud
+- **Signal:** Customer account funnels fiat to exchanges repeatedly.  
+  - **Why it Matters:** May indicate laundering via crypto.  
+- **Signal:** Small deposits followed by large withdrawals to new wallets.  
+  - **Why it Matters:** Classic layering and off-ramping.  
+- **Signal:** Transactions routed through mixers/tumblers.  
+  - **Why it Matters:** Used to obfuscate trail of illicit funds.  
+- **Signal:** Use of newly created wallets for high-value transfers.  
+  - **Why it Matters:** Fraudsters avoid reusing wallets to reduce traceability.  
+- **Signal:** Customer participation in high-risk ICOs or tokens.  
+  - **Why it Matters:** Could suggest involvement in pump-and-dump schemes.  
+
+---
+
+## Signals for: Insurance & Claims Fraud
+- **Signal:** Repeated claims with similar documentation.  
+  - **Why it Matters:** Fraudsters recycle templates across claims.  
+- **Signal:** Claims filed shortly after policy inception.  
+  - **Why it Matters:** Red flag for opportunistic fraud.  
+- **Signal:** Injury claims with no corroborating medical evidence.  
+  - **Why it Matters:** Fake injury scams inflate payouts.  
+- **Signal:** Multiple claims linked to same repair shop/clinic.  
+  - **Why it Matters:** Suggests collusion.  
+- **Signal:** Unusually high-value claims inconsistent with coverage.  
+  - **Why it Matters:** Fraudsters overstate losses.  
+
+---
+
+## Signals for: Trade-Based Money Laundering (TBML)
+- **Signal:** Invoice values significantly above/below market rates.  
+  - **Why it Matters:** Over/under invoicing is classic TBML.  
+- **Signal:** Mismatch between shipping documents and goods.  
+  - **Why it Matters:** Phantom or misclassified shipments launder money.  
+- **Signal:** Circular trade routes with no economic purpose.  
+  - **Why it Matters:** Fake trade loops designed to justify fund flows.  
+- **Signal:** Counterparties in high-risk jurisdictions.  
+  - **Why it Matters:** Some regions are TBML hotspots.  
+- **Signal:** Use of shell or newly incorporated companies in trades.  
+  - **Why it Matters:** Shells add opacity to laundering.  
+
+---
+
+## Signals for: Insider Fraud
+- **Signal:** Employee overrides on system controls.  
+  - **Why it Matters:** Overrides may signal abuse of access.  
+- **Signal:** Staff accessing customer records outside their remit.  
+  - **Why it Matters:** Could indicate data harvesting.  
+- **Signal:** Frequent transactions just below approval thresholds.  
+  - **Why it Matters:** Insiders evade oversight by staying under limits.  
+- **Signal:** Sudden lifestyle changes inconsistent with salary.  
+  - **Why it Matters:** Red flag for illicit enrichment.  
+- **Signal:** Collusion between staff and external parties.  
+  - **Why it Matters:** Increases complexity and damage of fraud schemes.  
+
+---
+

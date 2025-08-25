@@ -1,5 +1,5 @@
 # Frequent Fraud Patterns
-*50 practical detection patterns with signals and linked typologies.*
+*50 practical detection patterns, with detection signals and linked typologies.*
 
 ---
 

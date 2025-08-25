@@ -1,0 +1,158 @@
+# Fraud Typology Crosswalk: Patterns and Signals ↔ Scenarios
+
+This file links **fraud typologies** with their **common detection signals** and **real-world/illustrative case studies**.  
+It enables FinCrime professionals (and RAG systems) to retrieve related signals + scenarios for a given typology.  
+
+---
+
+## Typology: Identity Fraud (Third-Party) & Account Takeover (ATO)
+- **Signals:**
+  - Login from new device or unrecognized location
+  - High velocity of profile changes after login
+  - Mismatch between device timezone/language and user profile
+  - Use of VPN, proxy, or Tor exit nodes
+  - Multiple failed login attempts followed by success
+  - SIM swap prior to account recovery
+- **Scenario:** (Real-World) Twitter CEO Jack Dorsey’s account hijacked via SIM swap (2019), leading to unauthorized posts.  
+
+---
+
+## Typology: Synthetic Identity Fraud
+- **Signals:**
+  - Thin/no long-term credit history
+  - PII inconsistencies (SSN vs DOB vs address)
+  - Multiple applications with minor PII variations
+  - High number of authorized tradelines
+  - Discrepancy between phone/email tenure and applicant age
+- **Scenario:** (Example) “Jane Smith” identity built with child’s SSN + fake PII defaulting on $20K loan.  
+
+---
+
+## Typology: Authorized Push Payment (APP) Scam / Social Engineering
+- **Signals:**
+  - Customer overrides scam warnings
+  - Urgency narrative in memos (“safe account”)
+  - Large first-time transfer to new payee
+  - Payments outside customer’s historical pattern
+  - Multiple contacts with bank staff before transfer
+- **Scenario:** (Example) Retiree tricked by fake “bank fraud team” to transfer £40,000 into a “safe account” (UK Finance reported £485M losses in 2022).  
+
+---
+
+## Typology: Business Email Compromise (BEC) / Invoice Fraud
+- **Signals:**
+  - Supplier account changes with urgency
+  - Domain look-alike sender email
+  - Payment requests outside business hours
+  - Changes in invoice format/template
+  - High-value invoices inconsistent with history
+- **Scenario:** (Real-World) Ubiquiti Networks lost $46.7M in 2015 to fraudulent supplier impersonation.  
+
+---
+
+## Typology: Money Mule Activity
+- **Signals:**
+  - Rapid in-and-out transactions with low balance retention
+  - Multiple credits from unrelated senders followed by fan-out
+  - Salary accounts suddenly used for large transfers
+  - Geographic inconsistency in fund flows
+  - Customer recruited via “easy money” job offers
+- **Scenario:** (Real-World) Europol’s EMMA7 operation uncovered 18,000 mule accounts in 2021.  
+
+---
+
+## Typology: Card-Not-Present (CNP) / Payments Fraud
+- **Signals:**
+  - High velocity of small authorizations (“card testing”)
+  - Billing/shipping mismatch
+  - Multiple cards used from one device fingerprint
+  - High number of declines before one approval
+  - Purchases of high-resale goods / abnormal MCCs
+- **Scenario:** (Example) Fraudster tests stolen card data with <$2 charges before making large purchases.  
+
+---
+
+## Typology: Loan & Credit Application Fraud
+- **Signals:**
+  - Fake/forged employment documents
+  - New email/phone tenure vs stated age
+  - Multiple applications in a short time
+  - Same contact info across multiple applicants
+  - Spike in new accounts in one region
+- **Scenario:** (Real-World) 2020 PPP loan fraud in US—billions claimed with falsified payroll data.  
+
+---
+
+## Typology: Crypto & Digital Asset Fraud
+- **Signals:**
+  - Repeated fiat-to-exchange transfers
+  - Small deposits + large withdrawals to new wallets
+  - Use of mixers/tumblers for obfuscation
+  - High-value transfers via newly created wallets
+  - Involvement in high-risk ICOs/tokens
+- **Scenario:** (Real-World) 2021 Squid Game token rug pull stole $3.3M from investors.  
+
+---
+
+## Typology: Insurance Claims Fraud
+- **Signals:**
+  - Recycled documentation across claims
+  - Claims filed immediately post-policy inception
+  - Exaggerated injury without evidence
+  - Multiple claims linked to same repair shop/clinic
+  - High-value claims inconsistent with coverage
+- **Scenario:** (Example) Staged car accident with accomplices leading to false injury claims.  
+
+---
+
+## Typology: Trade-Based Money Laundering (TBML)
+- **Signals:**
+  - Invoices far above/below market rates
+  - Mismatched goods vs. shipping docs
+  - Circular trade routes without economic purpose
+  - Counterparties in high-risk jurisdictions
+  - Shell/newly incorporated trading companies
+- **Scenario:** (Real-World) FATF 2020 reports detail over-invoicing of goods to launder cross-border funds.  
+
+---
+
+## Typology: Insider Fraud
+- **Signals:**
+  - Employee overrides system controls
+  - Access to accounts outside remit
+  - Transactions just below approval thresholds
+  - Lifestyle changes inconsistent with salary
+  - Evidence of staff collusion
+- **Scenario:** (Real-World) Wells Fargo (2016) — 3.5M unauthorized accounts created by employees.  
+
+---
+
+## Typology: Elder Abuse & Lottery Scams
+- **Signals:**
+  - Multiple transfers to new recipients by elderly customers
+  - Narrative references to “fees,” “lottery winnings,” or “prize clearance”
+  - Increased customer interaction with unknown numbers  
+- **Scenario:** (Real-World) Jamaican lottery scams have stolen hundreds of millions annually from US seniors.  
+
+---
+
+## Typology: ATM Attacks (Skimming, Jackpotting, Cash-Out)
+- **Signals:**
+  - Multiple withdrawals in rapid succession
+  - Skimming devices/camera overlays found on ATMs
+  - Malware indicators in ATM OS
+  - Withdrawals across multiple countries simultaneously
+- **Scenario:** (Real-World) Cosmos Bank (India, 2018) — $13.5M stolen via coordinated ATM cash-out.  
+
+---
+
+## Typology: Phishing / Vishing / Smishing
+- **Signals:**
+  - Unusual login immediately after email click
+  - Multiple failed login attempts from one IP
+  - Sudden change in recovery email/phone
+  - Reports of spoofed domains mimicking institution
+- **Scenario:** (Real-World) Google blocked 18M COVID-19 phishing emails daily in 2020.  
+
+---
+

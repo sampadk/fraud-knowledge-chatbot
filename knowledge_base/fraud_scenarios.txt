@@ -1,0 +1,250 @@
+# Fraud Scenarios and Case Studies
+
+This file contains real-world case studies (attributed where possible) and illustrative examples where no public case study is available.  
+
+---
+
+## Example of: Business Email Compromise (BEC)
+- **Scenario:** In 2019, Toyota Boshoku, a European subsidiary, lost $37 million in a BEC attack. Fraudsters tricked staff into wiring funds by impersonating a senior executive.  
+- **Methodology:** Attackers spoofed internal email addresses, used urgency, and bypassed normal payment controls.  
+- **Impact:** $37M wired to fraudsters before the fraud was detected.  
+
+---
+
+## Example of: Romance Scam (Pig-Butchering)
+- **Scenario:** The FBI reported in 2022 that romance scams cost US victims over $1 billion annually. In one case, a woman in California lost $390,000 to a scammer posing as a crypto investor.  
+- **Methodology:** Fraudsters build emotional connections, then lure victims into investing in fake platforms.  
+- **Impact:** Victims lose life savings and face severe emotional trauma.  
+
+---
+
+## Example of: SIM Swap / Account Takeover (ATO)
+- **Scenario:** In 2019, Twitter CEO Jack Dorsey’s account was hijacked via a SIM swap. Attackers gained control of his number and used it to post tweets.  
+- **Methodology:** Fraudsters convinced the telecom provider to port the number to their SIM. With SMS OTPs, they reset accounts.  
+- **Impact:** High-profile reputational damage and demonstrated SIM swap risks globally.  
+
+---
+
+## Example of: Synthetic Identity Fraud
+- **Scenario:** In 2017, the US Federal Reserve highlighted synthetic identity fraud as the fastest-growing type of financial crime, costing lenders billions annually.  
+- **Illustrative Example:** A fraudster combines a child’s unused SSN with fake data to create “Jane Smith.” After 18 months of building credit, they default on $20,000 in loans.  
+- **Impact:** Bank losses and long-term damage to the child’s credit record.  
+
+---
+
+## Example of: Authorized Push Payment (APP) Scam
+- **Scenario:** In the UK, APP scams caused £485M in losses in 2022 (UK Finance). Victims were tricked into sending money to fraudsters.  
+- **Illustrative Example:** A retiree was called by fraudsters posing as their bank’s fraud team and instructed to transfer £40,000 to a “safe account.”  
+- **Impact:** The victim lost their savings.  
+
+---
+
+## Example of: Loan Application Fraud
+- **Scenario:** In 2020, multiple fintech lenders in the US reported a wave of fraudulent PPP (Paycheck Protection Program) loan applications.  
+- **Methodology:** Fraudsters submitted false payroll data and documents to obtain relief loans.  
+- **Impact:** Billions lost to fraudulent claims.  
+
+---
+
+## Example of: Insider Fraud
+- **Scenario:** In 2016, Wells Fargo faced a scandal where employees created 3.5 million unauthorized accounts to meet sales targets.  
+- **Methodology:** Staff exploited their privileged access to open accounts without customer consent.  
+- **Impact:** $3B in fines and severe reputational damage.  
+
+---
+
+## Example of: Triangulation Fraud
+- **Illustrative Example:** A fraudster runs a fake storefront online. Customers purchase goods, which are fulfilled using stolen card data.  
+- **Impact:** Cardholders file chargebacks; merchants and buyers suffer financial and reputational losses.  
+
+---
+
+## Example of: Mule Account / Fan-In Fan-Out
+- **Scenario:** In 2021, Europol’s “EMMA7” operation identified 18,000 money mule accounts across Europe.  
+- **Methodology:** Students and unemployed people were recruited via “easy money” job ads to launder funds.  
+- **Impact:** Tens of millions laundered; thousands arrested or warned.  
+
+---
+
+## Example of: Check / Cheque Fraud
+- **Scenario:** In 2022, the US Postal Service reported a surge in mail theft-driven check fraud, with 300,000 complaints filed.  
+- **Illustrative Example:** Fraudsters altered stolen checks and deposited them via mobile apps.  
+- **Impact:** Banks lost tens of millions; consumers faced delays in recovering funds.  
+
+---
+
+## Example of: Crypto Investment Scam
+- **Scenario:** In 2021, the “Squid Game” crypto token rug pull saw investors lose over $3.3M when creators vanished.  
+- **Methodology:** Fraudsters hyped a token, restricted selling, and disappeared with investor funds.  
+- **Impact:** Thousands of victims lost money overnight.  
+
+---
+
+## Example of: Elder Abuse Scam
+- **Scenario:** In 2018, the US Department of Justice charged 250 people in a crackdown on elder fraud schemes, involving losses of $500M.  
+- **Illustrative Example:** An elderly man was pressured into wiring $5,000 for his “grandson’s bail money.”  
+- **Impact:** Victims suffered financial loss and trauma.  
+
+---
+
+## Example of: Friendly Fraud (Chargeback Abuse)
+- **Illustrative Example:** A customer bought an iPhone online, signed for delivery, then disputed the charge as “unauthorized.”  
+- **Impact:** Merchant lost product and revenue, plus paid chargeback fees.  
+
+---
+
+## Example of: Bust-Out Credit Fraud
+- **Illustrative Example:** A synthetic identity steadily builds a credit score, then maxes out $100,000 in credit lines and disappears.  
+- **Impact:** Banks collectively lose six figures; recovery is near impossible.  
+
+---
+
+## Example of: ATM Skimming
+- **Scenario:** In 2019, Europol dismantled a global ATM skimming gang linked to €1 billion in thefts.  
+- **Methodology:** Criminals installed skimmers and cameras on ATMs.  
+- **Impact:** Millions of cardholders compromised.  
+
+---
+
+## Example of: E-Commerce Return Fraud
+- **Illustrative Example:** A fraudster buys a luxury dress, wears it once, and returns it claiming it’s unworn.  
+- **Impact:** Retailers lose inventory value and processing costs.  
+
+---
+
+## Example of: Deepfake CEO Fraud
+- **Scenario:** In 2019, criminals used AI voice-cloning to impersonate a CEO of a UK energy firm, tricking staff into wiring €220,000. (Reported by WSJ)  
+- **Impact:** Funds were unrecoverable, proving deepfake voice fraud is a real risk.  
+
+---
+
+## Example of: Charity / Disaster Relief Scam
+- **Scenario:** After Hurricane Katrina (2005), thousands of fake charities solicited donations online.  
+- **Impact:** Millions diverted from legitimate relief efforts.  
+
+---
+
+## Example of: Payroll Diversion Fraud
+- **Scenario:** In 2019, the US FBI warned of payroll diversion scams where employees were tricked into changing bank details.  
+- **Impact:** Salaries were diverted into mule accounts.  
+
+---
+
+## Example of: Loyalty / Points Fraud
+- **Illustrative Example:** A fraudster compromised airline reward accounts and redeemed miles for gift cards.  
+- **Impact:** Consumers lost loyalty balances; airlines absorbed costs.  
+
+---
+
+## Example of: Trade-Based Money Laundering (TBML)
+- **Scenario:** In 2020, FATF cited cases where goods were deliberately over-invoiced to shift value across borders.  
+- **Impact:** Billions laundered through global trade channels.  
+
+---
+
+## Example of: Structuring / Smurfing
+- **Illustrative Example:** Criminals deposit $9,900 repeatedly at multiple branches to avoid $10,000 CTR thresholds.  
+- **Impact:** Money enters the banking system undetected.  
+
+---
+
+## Example of: Phishing / Vishing / Smishing
+- **Scenario:** In 2020, Google blocked 18 million COVID-19 phishing emails per day at the pandemic’s peak.  
+- **Illustrative Example:** Victims clicked fake vaccine appointment links and revealed credentials.  
+- **Impact:** Accounts compromised, identity stolen.  
+
+---
+
+## Example of: Tech Support Scam
+- **Scenario:** Microsoft reported that 3 in 5 consumers had encountered tech support scams in 2021.  
+- **Illustrative Example:** Victims were called by fake “Microsoft support” asking for remote access and payment.  
+- **Impact:** Thousands lost money and had devices compromised.  
+
+---
+
+## Example of: Invoice Fraud / Supplier Impersonation
+- **Scenario:** In 2015, Ubiquiti Networks lost $46.7M to invoice fraud. Attackers posed as suppliers with fake bank details.  
+- **Impact:** Major corporate loss.  
+
+---
+
+## Example of: Gift Card Fraud
+- **Illustrative Example:** A victim is pressured by a scammer claiming to be the IRS to pay back taxes using iTunes gift cards.  
+- **Impact:** Untraceable losses; gift cards resold on black markets.  
+
+---
+
+## Example of: Child Identity Theft
+- **Scenario:** Javelin Research (2021) found 1.25M US children were identity theft victims, often discovered years later.  
+- **Illustrative Example:** A child’s SSN was used to open a credit line that defaulted.  
+- **Impact:** Long-term damage to credit history.  
+
+---
+
+## Example of: Crypto Ponzi Scheme
+- **Scenario:** BitConnect collapsed in 2018, costing investors over $2.4B globally.  
+- **Methodology:** A Ponzi model promised guaranteed returns from crypto trading bots.  
+- **Impact:** Thousands defrauded.  
+
+---
+
+## Example of: ATM Cash-Out Attack
+- **Scenario:** In 2018, Cosmos Bank (India) suffered a $13.5M cyber-enabled ATM cash-out attack.  
+- **Methodology:** Hackers infiltrated systems and coordinated global withdrawals.  
+- **Impact:** Millions stolen in hours.  
+
+---
+
+## Example of: NFT Fraud
+- **Scenario:** In 2021, an artist’s work was stolen and minted as NFTs on OpenSea without consent.  
+- **Impact:** Loss of trust in NFT marketplaces; artists exploited.  
+
+---
+
+## Example of: Insider Collusion
+- **Illustrative Example:** A bank loan officer conspires with fraudsters to approve unqualified loans for kickbacks.  
+- **Impact:** Loan defaults; reputational damage.  
+
+---
+
+## Example of: Mortgage Fraud
+- **Scenario:** In 2007–2008 financial crisis, widespread mortgage fraud (inflated appraisals, liar loans) contributed to systemic collapse.  
+- **Impact:** Trillions in global losses.  
+
+---
+
+## Example of: Insurance Claims Fraud
+- **Illustrative Example:** A driver stages a car accident with accomplices to file exaggerated injury claims.  
+- **Impact:** Insurers and courts tied up in fraudulent payouts.  
+
+---
+
+## Example of: ATM Jackpotting
+- **Scenario:** In 2018, the US Secret Service warned banks of ATM jackpotting attacks using malware to make machines dispense cash.  
+- **Impact:** Machines drained of millions in cash.  
+
+---
+
+## Example of: Marketplace / Merchant Fraud
+- **Illustrative Example:** A fraudster sets up a new merchant account, processes large volumes, and vanishes with customer funds before chargebacks hit.  
+- **Impact:** Payment processors absorb losses.  
+
+---
+
+## Example of: Elder Lottery Scam
+- **Scenario:** Jamaican lottery scams cost US seniors hundreds of millions annually. Victims were told they had won but had to pay “fees” upfront.  
+- **Impact:** Seniors drained of savings.  
+
+---
+
+## Example of: Healthcare Fraud
+- **Scenario:** In 2020, a Florida healthcare executive was sentenced for $1.2B Medicare fraud involving unnecessary services.  
+- **Impact:** Massive healthcare losses and reduced trust in providers.  
+
+---
+
+## Example of: Crypto Exchange Hack
+- **Scenario:** In 2018, Coincheck (Japan) lost $530M in NEM tokens due to a hack.  
+- **Impact:** One of the largest crypto heists in history.  
+
+---
