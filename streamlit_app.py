@@ -6,7 +6,8 @@ from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmb
 from langchain_community.document_loaders import DirectoryLoader
 from langchain_community.document_loaders import TextLoader # Ensure this is here
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import Chroma
+#from langchain_community.vectorstores import Chroma
+from langchain_community.vectorstores import FAISS
 from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
 
@@ -66,7 +67,8 @@ def initialize_rag_chain():
         google_api_key=st.secrets["GEMINI_API_KEY"]
     )
     
-    vectorstore = Chroma.from_documents(documents=texts, embedding=embeddings)
+    #vectorstore = Chroma.from_documents(documents=texts, embedding=embeddings)
+    vectorstore = FAISS.from_documents(documents=texts, embedding=embeddings)
     
     llm = ChatGoogleGenerativeAI(
         model="gemini-1.5-flash", 

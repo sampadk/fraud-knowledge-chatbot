@@ -2,6 +2,6 @@ streamlit
 langchain
 langchain-community
 langchain-google-genai==1.0.3
-langchain-chroma
 langchain-text-splitters
 sentence-transformers
+faiss-cpu
