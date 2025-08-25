@@ -14,7 +14,7 @@ from langchain.chains import RetrievalQA
 # -------------------- App Header --------------------
 st.title("AI Fraud Risk Whisperer 🤖")
 st.caption("Running V15")
-st.write("Gemini 1.5 Flash + RAG over your fraud knowledge base. Ask about typologies, patterns, or signals.")
+st.write("Gemini 2.5 Flash Lite + RAG over your fraud knowledge base. Ask about typologies, patterns, or signals.")
 
 # -------------------- Synonym Map --------------------
 SYNONYM_MAP = {
@@ -63,7 +63,7 @@ with st.sidebar:
     )
     st.markdown("---")
     emb_label = os.environ.get("GEMINI_EMBED_MODEL", "models/text-embedding-004")
-    st.caption(f"Models → Chat: `models/gemini-1.5-flash` · Embed: `{emb_label}`")
+    st.caption(f"Models → Chat: `models/gemini-2.5-flash-lite` · Embed: `{emb_label}`")
     # Clear cache & reload
     if st.button("🔄 Clear cache & reload"):
         try:
