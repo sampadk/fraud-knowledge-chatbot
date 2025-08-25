@@ -9,12 +9,23 @@
 # - Shows citations (file + section) for trust
 # - Sidebar controls to rebuild index and tweak k
 # ---------------------------------------------------------------
+# --- SQLite shim: must be first, before anything imports sqlite3 ---
+import sys
+try:
+    import pysqlite3
+    sys.modules["sqlite3"] = pysqlite3
+    sys.modules["pysqlite3"] = pysqlite3
+except Exception:
+    pass
+
 
 import os
 import re
 import time
 import traceback
+import sqlite3
 import streamlit as st
+st.caption(f"SQLite version: {sqlite3.sqlite_version}")
 
 from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 from langchain_community.document_loaders import DirectoryLoader, TextLoader
