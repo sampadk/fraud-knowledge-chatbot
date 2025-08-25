@@ -1,6 +1,6 @@
 # Fraud Typology Crosswalk: Patterns and Signals ↔ Scenarios
 
-This file links **fraud typologies** with their **common detection signals** and **real-world/illustrative case studies**.  
+This file links **fraud typologies** with their **common patterns / detection signals** and **real-world/illustrative case studies**.  
 It enables FinCrime professionals (and RAG systems) to retrieve related signals + scenarios for a given typology.  
 
 ---
