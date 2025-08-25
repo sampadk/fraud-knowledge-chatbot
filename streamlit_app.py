@@ -1,4 +1,4 @@
-# streamlit_app.py (V15 – Flash-only, no compression, with de-dup & Clear Cache)
+# synonym_app.py (V15 – Flash-only, FAISS, no compression, clean prompt, cache button)
 
 import os
 import re
@@ -11,11 +11,12 @@ from langchain_community.vectorstores import FAISS
 from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
 
+# -------------------- App Header --------------------
 st.title("AI Fraud Risk Whisperer 🤖")
-st.caption("Running V15 · Uses Gemini 1.5 Flash-only · No compression")
-st.write("Gemini 1.5 Flash + RAG over your fraud knowledge base. Ask away!")
+st.caption("Running V15")
+st.write("Gemini 1.5 Flash + RAG over your fraud knowledge base. Ask about typologies, patterns, or signals.")
 
-# ---------------- Synonym Map ----------------
+# -------------------- Synonym Map --------------------
 SYNONYM_MAP = {
     "Authorized Push Payment (APP) Scam": ["safe account scam", "bank transfer scam", "authorized payment scam", "APP", "push payment scam"],
     "Account Takeover (ATO)": ["hijacked account", "compromised account", "login takeover", "session takeover"],
@@ -38,10 +39,10 @@ SYNONYM_MAP = {
 }
 
 def expand_query_with_synonyms(query: str, synonym_map: dict) -> str:
+    """Append a small canonical hint when we see known aliases or terms."""
     expanded_query = query
     for formal_term, aliases in synonym_map.items():
-        all_terms = [formal_term] + aliases
-        for term in all_terms:
+        for term in [formal_term] + aliases:
             if re.search(r"\b" + re.escape(term) + r"\b", query, re.IGNORECASE):
                 hint = f" (related to: {formal_term})"
                 if hint not in expanded_query:
@@ -49,26 +50,22 @@ def expand_query_with_synonyms(query: str, synonym_map: dict) -> str:
                 break
     return expanded_query
 
-# ---------- Sidebar controls (with one-liners) ----------
+# -------------------- Sidebar Controls --------------------
 with st.sidebar:
     st.header("⚙️ Settings")
     temperature = st.slider(
-        "Temperature",
-        0.0, 1.0, 0.25, 0.05,
-        help="Controls creativity. Lower = concise and factual; higher = more varied wording."
+        "Temperature", 0.0, 1.0, 0.25, 0.05,
+        help="Controls creativity. Lower = concise & factual; higher = more varied wording."
     )
     retriever_k = st.slider(
-        "Retriever k (MMR)",
-        3, 8, 6, 1,
+        "Retriever k (MMR)", 3, 8, 6, 1,
         help="How many chunks to fetch before answering. Higher recalls more; too high may add noise."
     )
     st.markdown("---")
-    # Model banner (embed model label is what we *intend* to use; final fallback handled in code)
     emb_label = os.environ.get("GEMINI_EMBED_MODEL", "models/text-embedding-004")
     st.caption(f"Models → Chat: `models/gemini-1.5-flash` · Embed: `{emb_label}`")
-    # Clear cache & reload button
+    # Clear cache & reload
     if st.button("🔄 Clear cache & reload"):
-        # Clear both resource & data caches, then rerun
         try:
             st.cache_resource.clear()
         except Exception:
@@ -82,10 +79,9 @@ with st.sidebar:
             st.rerun()
         except Exception:
             st.experimental_rerun()
+    #st.caption("Set `GEMINI_API_KEY` in your Streamlit app secrets.")
 
-    st.caption("Set `GEMINI_API_KEY` in your Streamlit app secrets.")
-
-# ---------- Glossary, few-shots, and prompt ----------
+# -------------------- Prompt & Glossary --------------------
 DOMAIN_GLOSSARY = """
 - RAG: Retrieval-Augmented Generation; LLM answers grounded in retrieved documents.
 - Typology: Fraud category (the “scheme”) e.g., ATO, APP scam, BEC, mule.
@@ -140,19 +136,21 @@ SAFETY & CLARITY
 {FEW_SHOTS}
 """
 
-QA_TEMPLATE = """
-{system}
+# NOTE: f-string to inline SYSTEM_PROMPT & DOMAIN_GLOSSARY.
+# Double braces so PromptTemplate sees {question} and {context}.
+QA_TEMPLATE = f"""
+{SYSTEM_PROMPT}
 
 <GLOSSARY>
-{glossary}
+{DOMAIN_GLOSSARY}
 </GLOSSARY>
 
 <QUESTION>
-{query}
+{{question}}
 </QUESTION>
 
 <CONTEXT>
-{context}
+{{context}}
 </CONTEXT>
 
 <OUTPUT_REQUIREMENTS>
@@ -167,7 +165,9 @@ ANSWER:
 
 QA_CHAIN_PROMPT = PromptTemplate.from_template(QA_TEMPLATE)
 
+# -------------------- Helpers --------------------
 def _extract_top_heading(text: str) -> str:
+    """Grab first markdown heading (## preferred, else #) for nicer citation labels."""
     for line in text.splitlines():
         s = line.strip()
         if s.startswith("## "):
@@ -177,8 +177,8 @@ def _extract_top_heading(text: str) -> str:
     return ""
 
 def _dedupe_sentences(s: str) -> str:
-    """Remove exact duplicate sentences while preserving order."""
-    parts = re.split(r'(?<=[.!?])\s+', s.strip())
+    """Remove exact duplicate sentences while preserving order (lightweight)."""
+    parts = re.split(r'(?<=[.!?])\s+', (s or "").strip())
     seen = set()
     out = []
     for p in parts:
@@ -188,9 +188,10 @@ def _dedupe_sentences(s: str) -> str:
             seen.add(key)
     return " ".join(out)
 
-# ---------- Build the RAG chain (Flash-only) ----------
+# -------------------- Build RAG Chain --------------------
 @st.cache_resource(show_spinner=True)
 def initialize_rag_chain(temp: float, retriever_k: int):
+    # Load .txt docs from knowledge_base
     loader = DirectoryLoader(
         "knowledge_base/",
         glob="**/*.txt",
@@ -199,12 +200,13 @@ def initialize_rag_chain(temp: float, retriever_k: int):
     )
     documents = loader.load()
 
+    # Split and enrich metadata (for better source labels)
     splitter = RecursiveCharacterTextSplitter(chunk_size=380, chunk_overlap=50)
     chunks = splitter.split_documents(documents)
     for d in chunks:
         d.metadata["section"] = _extract_top_heading(d.page_content) or "Section"
 
-    # Embeddings: prefer new model; fallback to embedding-001
+    # Embeddings: prefer newer model; fallback gracefully
     emb_model = os.environ.get("GEMINI_EMBED_MODEL", "models/text-embedding-004")
     try:
         embeddings = GoogleGenerativeAIEmbeddings(
@@ -217,8 +219,10 @@ def initialize_rag_chain(temp: float, retriever_k: int):
             google_api_key=st.secrets["GEMINI_API_KEY"]
         )
 
+    # Vector store
     vectorstore = FAISS.from_documents(chunks, embeddings)
 
+    # LLM
     llm = ChatGoogleGenerativeAI(
         model="models/gemini-1.5-flash",
         google_api_key=st.secrets["GEMINI_API_KEY"],
@@ -227,18 +231,18 @@ def initialize_rag_chain(temp: float, retriever_k: int):
         max_output_tokens=768,
     )
 
+    # Retriever (MMR for diversity)
     retriever = vectorstore.as_retriever(
         search_type="mmr",
         search_kwargs={"k": retriever_k, "lambda_mult": 0.5}
     )
 
+    # Chain
     qa_chain = RetrievalQA.from_chain_type(
         llm=llm,
         retriever=retriever,
         chain_type="stuff",
-        chain_type_kwargs={
-            "prompt": QA_CHAIN_PROMPT.partial(system=SYSTEM_PROMPT, glossary=DOMAIN_GLOSSARY)
-        },
+        chain_type_kwargs={"prompt": QA_CHAIN_PROMPT},
         return_source_documents=True
     )
     return qa_chain
@@ -248,7 +252,7 @@ qa_chain = initialize_rag_chain(
     retriever_k=retriever_k
 )
 
-# ---------- Chat UI ----------
+# -------------------- Chat UI --------------------
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
@@ -263,11 +267,11 @@ if prompt := st.chat_input("Ask about a fraud typology, pattern, or signals…")
 
     with st.chat_message("assistant"):
         with st.spinner("Analyzing…"):
-            expanded = expand_query_with_synonyms(prompt, SYNONYM_MAP)
-            if expanded != prompt:
-                st.info(f"Expanded query for retrieval: _{expanded}_")
+            expanded_prompt = expand_query_with_synonyms(prompt, SYNONYM_MAP)
+            if expanded_prompt != prompt:
+                st.info(f"Expanded query for retrieval: _{expanded_prompt}_")
 
-            result = qa_chain.invoke({"query": expanded})
+            result = qa_chain.invoke({"query": expanded_prompt})
             answer = result.get("result", "")
             sources = result.get("source_documents", []) or []
 
