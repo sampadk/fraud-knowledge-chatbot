@@ -123,21 +123,19 @@ def initialize_rag_chain():
     DOMAIN GLOSSARY:
     {domain_glossary}
 
-    <QUESTION>
-    {question}
-    </QUESTION>
+    CONTEXT:
+    {{context}}
 
-    <CONTEXT>
-    {context}  <!-- up to ~1200 tokens across 3–5 top chunks -->
-    </CONTEXT>
+    QUESTION:
+    {{question}}
 
     <OUTPUT_REQUIREMENTS>
-    - Answer only from CONTEXT; if insufficient, say so briefly and suggest 1–2 precise follow-ups.
-    - Keep the opening answer to 2–4 sentences; then bullets if helpful.
-    - Use the user’s terms; if they’re ambiguous (e.g., “safe account”), normalize once (APP scam).
-    - Close with “Sources:” followed by file and section names from CONTEXT.
+        - Answer only from CONTEXT; if insufficient, say so briefly and suggest 1–2 precise follow-ups.
+        - Keep the opening answer to 2–4 sentences; then bullets if helpful.
+        - Use the user’s terms; if they’re ambiguous (e.g., “safe account”), normalize once (APP scam).
+        - Close with “Sources:” followed by file and section names from CONTEXT.
     </OUTPUT_REQUIREMENTS>
-    
+
     ANSWER:
     """
     QA_CHAIN_PROMPT = PromptTemplate.from_template(template)
