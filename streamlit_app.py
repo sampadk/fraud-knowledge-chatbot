@@ -273,7 +273,7 @@ if prompt := st.chat_input("Ask about a fraud typology, pattern, or signals…")
 
             result = qa_chain.invoke({"query": expanded_prompt})
             answer = result.get("result", "")
-            sources = result.get("source_documents", []) or []
+     #       sources = result.get("source_documents", []) or []
 
             cleaned = _dedupe_sentences(answer) if answer else answer
 
