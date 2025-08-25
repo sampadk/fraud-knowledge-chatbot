@@ -142,7 +142,7 @@ QA_TEMPLATE = """
 </GLOSSARY>
 
 <QUESTION>
-{question}
+{query}
 </QUESTION>
 
 <CONTEXT>
@@ -187,7 +187,7 @@ def initialize_rag_chain(temp: float, retriever_k: int, use_compression: bool):
         d.metadata["section"] = _extract_top_heading(d.page_content) or "Section"
 
     # Prefer newer embed model if available; fallback gracefully
-    emb_model = os.environ.get("GEMINI_EMBED_MODEL", "text-embedding-004")
+    emb_model = os.environ.get("GEMINI_EMBED_MODEL", "models/text-embedding-004")
     try:
         embeddings = GoogleGenerativeAIEmbeddings(model=emb_model, google_api_key=st.secrets["GEMINI_API_KEY"])
     except Exception:
@@ -196,7 +196,7 @@ def initialize_rag_chain(temp: float, retriever_k: int, use_compression: bool):
     vectorstore = FAISS.from_documents(chunks, embeddings)
 
     llm = ChatGoogleGenerativeAI(
-        model="gemini-1.5-flash",
+        model="models/gemini-1.5-flash",
         google_api_key=st.secrets["GEMINI_API_KEY"],
         temperature=temp,
         top_p=0.9,
