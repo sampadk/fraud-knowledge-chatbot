@@ -12,7 +12,7 @@ from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
 
 st.title("AI Fraud Risk Whisperer 🤖")
-st.caption("Running V13.4 · Flash-only · No compression")
+st.caption("Running V15 · Uses Gemini 1.5 Flash-only · No compression")
 st.write("Gemini 1.5 Flash + RAG over your fraud knowledge base. Ask away!")
 
 # ---------------- Synonym Map ----------------
