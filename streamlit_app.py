@@ -1,4 +1,4 @@
-# streamlit_app.py (V14 – Flash-only, with helpful sidebar hints)
+# streamlit_app.py (V15 – Flash-only, no compression, with de-duplication)
 
 import os
 import re
@@ -11,18 +11,11 @@ from langchain_community.vectorstores import FAISS
 from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
 
-# Optional compression (auto-disabled if not available in your LangChain build)
-try:
-    from langchain.retrievers import ContextualCompressionRetriever
-    from langchain_community.document_transformers import EmbeddingsRedundantFilter
-    HAS_COMPRESSION = True
-except Exception:
-    HAS_COMPRESSION = False
-
 st.title("AI Fraud Risk Whisperer 🤖")
+st.caption("Running V13.3 · Flash-only · No compression")
 st.write("Gemini 1.5 Flash + RAG over your fraud knowledge base. Ask away!")
 
-# ---------- Synonym Map ----------
+# ---------------- Synonym Map ----------------
 SYNONYM_MAP = {
     "Authorized Push Payment (APP) Scam": ["safe account scam", "bank transfer scam", "authorized payment scam", "APP", "push payment scam"],
     "Account Takeover (ATO)": ["hijacked account", "compromised account", "login takeover", "session takeover"],
@@ -56,26 +49,19 @@ def expand_query_with_synonyms(query: str, synonym_map: dict) -> str:
                 break
     return expanded_query
 
-# ---------- Sidebar controls (with descriptions) ----------
+# ---------- Sidebar controls (with one-liners) ----------
 with st.sidebar:
     st.header("⚙️ Settings")
     temperature = st.slider(
         "Temperature",
         0.0, 1.0, 0.25, 0.05,
-        help="Controls creativity. Lower = more factual/concise; higher = more varied wording."
+        help="Controls creativity. Lower = concise and factual; higher = more varied wording."
     )
     retriever_k = st.slider(
         "Retriever k (MMR)",
         3, 8, 6, 1,
-        help="How many chunks to fetch before answering. Higher can recall more, but may add noise."
+        help="How many chunks to fetch before answering. Higher recalls more; too high may add noise."
     )
-    compress_requested = st.checkbox(
-        "Contextual compression",
-        value=True if HAS_COMPRESSION else False,
-        help="Removes redundant sentences in retrieved chunks to keep context tight. (Auto-disables if unsupported.)"
-    )
-    if compress_requested and not HAS_COMPRESSION:
-        st.caption("Compression not available in this LangChain build; using base retriever.")
     st.markdown("---")
     st.caption("Set `GEMINI_API_KEY` in your Streamlit app secrets.")
 
@@ -170,9 +156,22 @@ def _extract_top_heading(text: str) -> str:
             return s[2:].strip()
     return ""
 
+def _dedupe_sentences(s: str) -> str:
+    """Remove exact duplicate sentences while preserving order."""
+    # Simple sentence split; avoids heavy NLP deps.
+    parts = re.split(r'(?<=[.!?])\s+', s.strip())
+    seen = set()
+    out = []
+    for p in parts:
+        key = p.strip().lower()
+        if key and key not in seen:
+            out.append(p)
+            seen.add(key)
+    return " ".join(out)
+
 # ---------- Build the RAG chain (Flash-only) ----------
 @st.cache_resource(show_spinner=True)
-def initialize_rag_chain(temp: float, retriever_k: int, use_compression: bool):
+def initialize_rag_chain(temp: float, retriever_k: int):
     loader = DirectoryLoader(
         "knowledge_base/",
         glob="**/*.txt",
@@ -186,12 +185,18 @@ def initialize_rag_chain(temp: float, retriever_k: int, use_compression: bool):
     for d in chunks:
         d.metadata["section"] = _extract_top_heading(d.page_content) or "Section"
 
-    # Prefer newer embed model if available; fallback gracefully
+    # Embeddings: prefer new model; fallback to embedding-001
     emb_model = os.environ.get("GEMINI_EMBED_MODEL", "models/text-embedding-004")
     try:
-        embeddings = GoogleGenerativeAIEmbeddings(model=emb_model, google_api_key=st.secrets["GEMINI_API_KEY"])
+        embeddings = GoogleGenerativeAIEmbeddings(
+            model=emb_model,
+            google_api_key=st.secrets["GEMINI_API_KEY"]
+        )
     except Exception:
-        embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key=st.secrets["GEMINI_API_KEY"])
+        embeddings = GoogleGenerativeAIEmbeddings(
+            model="models/embedding-001",
+            google_api_key=st.secrets["GEMINI_API_KEY"]
+        )
 
     vectorstore = FAISS.from_documents(chunks, embeddings)
 
@@ -203,19 +208,10 @@ def initialize_rag_chain(temp: float, retriever_k: int, use_compression: bool):
         max_output_tokens=768,
     )
 
-    base_retriever = vectorstore.as_retriever(
+    retriever = vectorstore.as_retriever(
         search_type="mmr",
         search_kwargs={"k": retriever_k, "lambda_mult": 0.5}
     )
-
-    if use_compression and HAS_COMPRESSION:
-        compressor = EmbeddingsRedundantFilter(embeddings=embeddings, similarity_threshold=0.95)
-        retriever = ContextualCompressionRetriever(
-            base_retriever=base_retriever,
-            base_compressor=compressor
-        )
-    else:
-        retriever = base_retriever
 
     qa_chain = RetrievalQA.from_chain_type(
         llm=llm,
@@ -230,8 +226,7 @@ def initialize_rag_chain(temp: float, retriever_k: int, use_compression: bool):
 
 qa_chain = initialize_rag_chain(
     temp=temperature,
-    retriever_k=retriever_k,
-    use_compression=compress_requested
+    retriever_k=retriever_k
 )
 
 # ---------- Chat UI ----------
@@ -257,7 +252,10 @@ if prompt := st.chat_input("Ask about a fraud typology, pattern, or signals…")
             answer = result.get("result", "")
             sources = result.get("source_documents", []) or []
 
-            st.markdown(answer if answer else "_No answer produced._")
+            # light de-dupe to avoid repeated sentences from the model
+            cleaned = _dedupe_sentences(answer) if answer else answer
+
+            st.markdown(cleaned if cleaned else "_No answer produced._")
             if sources:
                 st.markdown("**Sources used:**")
                 for i, doc in enumerate(sources, start=1):
@@ -265,4 +263,4 @@ if prompt := st.chat_input("Ask about a fraud typology, pattern, or signals…")
                     section = doc.metadata.get("section", "Section")
                     st.markdown(f"- {i}. `{fname}` — _{section}_")
 
-    st.session_state.messages.append({"role": "assistant", "content": answer})
+    st.session_state.messages.append({"role": "assistant", "content": cleaned if answer else answer})
