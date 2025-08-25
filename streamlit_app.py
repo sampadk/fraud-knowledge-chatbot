@@ -1,4 +1,4 @@
-# streamlit_app.py (V15 – Flash-only, no compression, with de-duplication)
+# streamlit_app.py (V15 – Flash-only, no compression, with de-dup & Clear Cache)
 
 import os
 import re
@@ -12,7 +12,7 @@ from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
 
 st.title("AI Fraud Risk Whisperer 🤖")
-st.caption("Running V13.3 · Flash-only · No compression")
+st.caption("Running V13.4 · Flash-only · No compression")
 st.write("Gemini 1.5 Flash + RAG over your fraud knowledge base. Ask away!")
 
 # ---------------- Synonym Map ----------------
@@ -63,6 +63,26 @@ with st.sidebar:
         help="How many chunks to fetch before answering. Higher recalls more; too high may add noise."
     )
     st.markdown("---")
+    # Model banner (embed model label is what we *intend* to use; final fallback handled in code)
+    emb_label = os.environ.get("GEMINI_EMBED_MODEL", "models/text-embedding-004")
+    st.caption(f"Models → Chat: `models/gemini-1.5-flash` · Embed: `{emb_label}`")
+    # Clear cache & reload button
+    if st.button("🔄 Clear cache & reload"):
+        # Clear both resource & data caches, then rerun
+        try:
+            st.cache_resource.clear()
+        except Exception:
+            pass
+        try:
+            st.cache_data.clear()
+        except Exception:
+            pass
+        st.success("Cache cleared. Reloading…")
+        try:
+            st.rerun()
+        except Exception:
+            st.experimental_rerun()
+
     st.caption("Set `GEMINI_API_KEY` in your Streamlit app secrets.")
 
 # ---------- Glossary, few-shots, and prompt ----------
@@ -158,7 +178,6 @@ def _extract_top_heading(text: str) -> str:
 
 def _dedupe_sentences(s: str) -> str:
     """Remove exact duplicate sentences while preserving order."""
-    # Simple sentence split; avoids heavy NLP deps.
     parts = re.split(r'(?<=[.!?])\s+', s.strip())
     seen = set()
     out = []
@@ -252,7 +271,6 @@ if prompt := st.chat_input("Ask about a fraud typology, pattern, or signals…")
             answer = result.get("result", "")
             sources = result.get("source_documents", []) or []
 
-            # light de-dupe to avoid repeated sentences from the model
             cleaned = _dedupe_sentences(answer) if answer else answer
 
             st.markdown(cleaned if cleaned else "_No answer produced._")
